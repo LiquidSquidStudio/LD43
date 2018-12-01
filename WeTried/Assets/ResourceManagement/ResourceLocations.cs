@@ -1,4 +1,4 @@
-﻿public enum ResourceLocations
+﻿public enum ResourceLocation
 {
     CrowdPit = 0,
     Castle = 1,

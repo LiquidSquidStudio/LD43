@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class ResourceManagementCoreLogic
+public class ResourceManagementCore : MonoBehaviour
 {
     #region Property
     public KingData King { get; private set; }
@@ -11,12 +11,27 @@ public class ResourceManagementCoreLogic
     public GameResourceState ResourceState { get; private set; }
     #endregion
 
-    #region Constructor
-    public ResourceManagementCoreLogic(KingData king, DragonData dragon, GameResourceState resourceState)
+    #region PrivateFields
+    [SerializeField]
+    [Tooltip("Number of peasants on game start")]
+    private int _nPeasantsOnStartup = 100;
+
+    [SerializeField]
+    [Tooltip("Stat boost multiplier")]
+    private float _statBoostMax = 5;
+
+    [SerializeField]
+    [Tooltip("Percentage chance of gaining a random affinity")]
+    [Range(0.0f, 100.0f)]
+    private float _affinityChancePercent = 10.0f;
+
+    #endregion
+
+
+    #region Unity lifecycles
+    public void Awake()
     {
-        King = king;
-        Dragon = dragon;
-        ResourceState = resourceState;
+        Initialise();
     }
     #endregion
 
@@ -94,7 +109,7 @@ public class ResourceManagementCoreLogic
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Peasant> GetPeasantResource()
+    public IEnumerable<Peasant> GetPeasants()
     {
         return ResourceState.Peasants;
     }
@@ -106,10 +121,90 @@ public class ResourceManagementCoreLogic
 
     #endregion
 
+    #region Core Game mechanics
+
+    public GameResourceState DayEnd()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Initialise()
+    {
+        Random.InitState(Guid.NewGuid().GetHashCode()); // pretty much guarantees uniqueness between gameruns
+
+        if (King == null) { King = new KingData(); }   
+        if (Dragon == null) { Dragon = new DragonData(); }   
+        if (ResourceState == null) {
+
+            var peasants = GeneratePeasants(_nPeasantsOnStartup);
+            ResourceState = new GameResourceState(peasants:peasants);
+        }
+    }
+
     #endregion
 
+    #endregion
 
     #region ImplementationDetail
+
+    private IEnumerable<Peasant> GeneratePeasants(int nPeasants)
+    {
+        var peasants = new List<Peasant>();
+
+        int count = 0;
+
+        while (count < nPeasants)
+        {
+            int level = 0;
+            var location = ResourceLocation.CrowdPit;
+            float statBoost = GenerateRandomStatBoost();
+            var affinity = AssignRandomAffinity();
+            bool transit = false;
+
+            peasants.Add(
+                new Peasant(
+                    level: level,
+                    location: location,
+                    statBoostBonus: statBoost,
+                    resourceAffinity: affinity,
+                    inTransit: transit
+                ));
+        }
+
+        return peasants;
+    }
+
+    private List<MaterialResourceType> AssignRandomAffinity()
+    {
+        var result = new List<MaterialResourceType>();
+
+        if (RandomChance(_affinityChancePercent))
+        {
+            result.Add(SelectRandomRersource());                
+        }
+
+        return result;
+
+    }
+
+    private MaterialResourceType SelectRandomRersource()
+    {
+        int nResourceTypes = Enum.GetNames(typeof(MaterialResourceType)).Length;
+        int randommIndex = (int)Random.Range(0.0f, nResourceTypes);
+        return (MaterialResourceType)randommIndex;
+    }
+
+    private bool RandomChance(float chance)
+    {
+        var comparer = Random.Range(0.0f, 100.0f);
+
+        return (comparer <= chance);
+    }
+
+    private float GenerateRandomStatBoost()
+    {
+        return Random.Range(0.0f, _statBoostMax);
+    }
 
     private void AddMaterialResource(MaterialResourceType gameResource, int incrementValue)
     {
