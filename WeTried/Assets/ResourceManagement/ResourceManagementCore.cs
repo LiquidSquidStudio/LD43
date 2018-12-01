@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,10 +12,16 @@ public class ResourceManagementCore : MonoBehaviour
     public GameResourceState ResourceState { get; private set; }
     #endregion
 
+    #region Public Fields
+    [Header("Dependencies To be wired up")]
+    public ResourceManagementTestUIManager DisplayManager;
+
+    #endregion
+
     #region PrivateFields
     [SerializeField]
     [Tooltip("Number of peasants on game start")]
-    private int _nPeasantsOnStartup = 100;
+    private int _nPeasantsOnStartup = 5;
 
     [SerializeField]
     [Tooltip("Stat boost multiplier")]
@@ -25,14 +32,25 @@ public class ResourceManagementCore : MonoBehaviour
     [Range(0.0f, 100.0f)]
     private float _affinityChancePercent = 10.0f;
 
-    #endregion
+    [SerializeField]
+    [Tooltip("Percentage chance of gaining a random affinity")]
+    [Range(0, 10)]
+    private int _currentDay = 1;
 
+    #endregion
 
     #region Unity lifecycles
     public void Awake()
     {
-        Initialise();
+        Debug.Log("Resource management core Awake");
     }
+    public void Start()
+    {
+        Debug.Log("Resource management core Start");
+        Initialise();
+        DisplayManager.UpdateUI(ResourceState, _currentDay);
+    }
+
     #endregion
 
     #region Implementation
@@ -128,8 +146,20 @@ public class ResourceManagementCore : MonoBehaviour
         throw new NotImplementedException();
     }
 
+    public void OnDayEnd()
+    {
+        _currentDay++;
+        Debug.Log("End of the day Detected!");
+        DisplayManager.UpdateUI(ResourceState, _currentDay);
+    }
+
     public void Initialise()
     {
+        if (DisplayManager == null)
+        {
+            throw new InvalidOperationException("Public Fields for Resouce Management Core is invalid. Wire it up fool.");
+        }
+
         Random.InitState(Guid.NewGuid().GetHashCode()); // pretty much guarantees uniqueness between gameruns
 
         if (King == null) { King = new KingData(); }   
@@ -139,6 +169,20 @@ public class ResourceManagementCore : MonoBehaviour
             var peasants = GeneratePeasants(_nPeasantsOnStartup);
             ResourceState = new GameResourceState(peasants:peasants);
         }
+    }
+
+    public int GetNumberOfPeastantsAt(ResourceLocation location)
+    {
+        var peasants = ResourceState.Peasants;
+
+        return peasants.Count(p => p.CurrentLocation == location);
+    }
+
+    public IEnumerable<Peasant> GetPeasantsAt(ResourceLocation location)
+    {
+        var peasants = ResourceState.Peasants;
+
+        return peasants.Where(p => p.CurrentLocation == location);
     }
 
     #endregion
@@ -169,6 +213,8 @@ public class ResourceManagementCore : MonoBehaviour
                     resourceAffinity: affinity,
                     inTransit: transit
                 ));
+
+            count++;
         }
 
         return peasants;
