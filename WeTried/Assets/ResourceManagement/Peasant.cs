@@ -10,11 +10,11 @@ public class Peasant : MonoBehaviour
     public float StatBoostBonus { get; set; }
     public IEnumerable<MaterialResourceType> ResourceAffinity { get; set; }
     public bool IsInTrasit { get; set; }
+
     #endregion
 
     #region Implementation
 
-    #endregion
     public Peasant(int level = 0, ResourceLocation location = ResourceLocation.CrowdPit, float statBoostBonus = 0.0f, IEnumerable<MaterialResourceType> resourceAffinity = null, bool inTransit = false)
     {
         Level = level;
@@ -23,5 +23,13 @@ public class Peasant : MonoBehaviour
         ResourceAffinity = resourceAffinity ?? new List<MaterialResourceType>();
         IsInTrasit = inTransit;
     }
+
+    public void Die()
+    {
+        Destroy(this.transform.gameObject);
+    }
+
+    #endregion
+
 }
 

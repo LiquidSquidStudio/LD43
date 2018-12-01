@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class ResourceManagementCore : MonoBehaviour
@@ -15,7 +16,6 @@ public class ResourceManagementCore : MonoBehaviour
     #region Public Fields
     [Header("Dependencies To be wired up")]
     public ResourceManagementTestUIManager DisplayManager;
-
     #endregion
 
     #region PrivateFields
@@ -36,6 +36,9 @@ public class ResourceManagementCore : MonoBehaviour
     [Tooltip("Percentage chance of gaining a random affinity")]
     [Range(0, 10)]
     private int _currentDay = 1;
+
+    private int _winSceneIndex = 1;
+    private int _loseSceneIndex = 2;
 
     #endregion
 
@@ -141,16 +144,113 @@ public class ResourceManagementCore : MonoBehaviour
 
     #region Core Game mechanics
 
-    public GameResourceState DayEnd()
+    public GameResourceState DayEnd(GameResourceState currentGameState)
     {
-        throw new NotImplementedException();
+        // Generate resources
+        GenerateResources(currentGameState);
+
+        // Let the Dragon purrr
+        LetTheDragonLoose(currentGameState, Dragon, King);
+
+        return ResourceState;
+    }
+
+    private void LetTheDragonLoose(GameResourceState currentGameState, DragonData dragon, KingData king)
+    {
+        int dailyAppetite = dragon.DailyAppetitite;
+        int nPeasantsInPen = GetNumberOfPeastantsAt(ResourceLocation.SacrificialPen);
+
+        EatHumans(GetPeasantsAt(ResourceLocation.SacrificialPen));
+
+        if (dailyAppetite > nPeasantsInPen)
+        {
+            AttackRandomLocation(currentGameState);
+        }
+    }
+
+    private void AttackRandomLocation(GameResourceState currentGameState)
+    {
+        var randomLocation = SelectRandomLocation();
+
+        var peastantsToDie = GetPeasantsAt(randomLocation);
+
+        foreach (var peasant in peastantsToDie)
+        {
+            peasant.Die();
+        }
+
+    }
+
+    private void EatHumans(IEnumerable<Peasant> peasants)
+    {
+        var allPeasants = GetPeasants().ToList();
+        
+        foreach (var peasant in peasants)
+        {
+            allPeasants.Remove(peasant);
+            //peasant.Die();
+        }
+
+        ResourceState.UpdatePeastants(allPeasants);
+    }
+
+    private void GenerateResources(GameResourceState currentState)
+    {
+        // Weapon
+        var nPeasantsAtWeapon = GetNumberOfPeastantsAt(ResourceLocation.BlackSmiths);
+        GenerateWeapons(GetWoodResource(), GetIronResource(), nPeasantsAtWeapon);
+
+        // Food
+        var nPeasantsAtFarm = GetNumberOfPeastantsAt(ResourceLocation.Farm);
+        AddWeaponResource(nPeasantsAtFarm);
+
+        // Iron
+        var nPeasantsAtMine = GetNumberOfPeastantsAt(ResourceLocation.Mine);
+        AddWeaponResource(nPeasantsAtMine);
+
+        // Wood
+        var nPeasantsAtForrest = GetNumberOfPeastantsAt(ResourceLocation.Forrest);
+        AddWeaponResource(nPeasantsAtForrest);
+
+    }
+
+    private void GenerateWeapons(int nWood, int nIron, int nPeasants)
+    {
+        var nWeaponsToCreate = new int[] { nWood, nIron, nPeasants }.Min();
+
+        SubtractWoodResource(nWeaponsToCreate);
+        SubtractIronResource(nWeaponsToCreate);
+        AddWeaponResource(nWeaponsToCreate);
     }
 
     public void OnDayEnd()
     {
         _currentDay++;
         Debug.Log("End of the day Detected!");
+        var updatedResources = DayEnd(ResourceState);
         DisplayManager.UpdateUI(ResourceState, _currentDay);
+    }
+
+    public void OnAttackDragon()
+    {
+        var result = FightWithDragon(Dragon, GetWeaponResource(), GetPeasants());
+
+        if (result == true)
+        {
+            GoToWin();
+        } else {
+            GoToLose();
+        }
+    }
+
+    private void GoToLose()
+    {
+        SceneManager.LoadScene(_loseSceneIndex);
+    }
+
+    private void GoToWin()
+    {
+        SceneManager.LoadScene(_winSceneIndex);
     }
 
     public void Initialise()
@@ -185,11 +285,43 @@ public class ResourceManagementCore : MonoBehaviour
         return peasants.Where(p => p.CurrentLocation == location);
     }
 
-    #endregion
+    /// <summary>
+    /// Core logic to figh with the dragon
+    /// </summary>
+    /// <param name="dragon"></param>
+    /// <param name=""></param>
+    /// <returns></returns>
+    public bool FightWithDragon(DragonData dragon, int nWeapons, IEnumerable<Peasant> fighters)
+    {
+        var totalFightingForce = CalculateTotalForce(nWeapons, fighters);
+
+        bool result = totalFightingForce >= dragon.FightingStrength;
+
+        return result;
+    }
 
     #endregion
+
+    #endregion  
 
     #region ImplementationDetail
+
+    private int CalculateTotalForce(int nWeapons, IEnumerable<Peasant> fighters)
+    {
+        int result = nWeapons;
+
+        var giftedFighters = fighters.Where(f => f.ResourceAffinity.Contains(MaterialResourceType.Weapon));
+
+        if (giftedFighters.Count() > 0)
+        {
+            foreach (var giftedFighter in giftedFighters)
+            {
+                result += (int)giftedFighter.StatBoostBonus;
+            }
+        }
+
+        return result;
+    }
 
     private IEnumerable<Peasant> GeneratePeasants(int nPeasants)
     {
@@ -238,6 +370,13 @@ public class ResourceManagementCore : MonoBehaviour
         int nResourceTypes = Enum.GetNames(typeof(MaterialResourceType)).Length;
         int randommIndex = (int)Random.Range(0.0f, nResourceTypes);
         return (MaterialResourceType)randommIndex;
+    }
+
+    private ResourceLocation SelectRandomLocation()
+    {
+        int nLocation = Enum.GetNames(typeof(ResourceLocation)).Length;
+        int randommIndex = (int)Random.Range(0.0f, nLocation);
+        return (ResourceLocation)randommIndex;
     }
 
     private bool RandomChance(float chance)
@@ -314,4 +453,3 @@ public class ResourceManagementCore : MonoBehaviour
     #endregion
 
 }
-
