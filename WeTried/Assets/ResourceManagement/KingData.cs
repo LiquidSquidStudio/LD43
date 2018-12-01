@@ -1,4 +1,4 @@
-﻿public class KingModel
+﻿public class KingData
 {
     #region Resource Management
 
