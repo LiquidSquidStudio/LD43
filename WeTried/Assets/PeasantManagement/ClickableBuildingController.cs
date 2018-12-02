@@ -52,6 +52,7 @@ public class ClickableBuildingController : MonoBehaviour {
                         Debug.Log("Invoking Event to go to: " + buildingType);
                         MoveToBuildingEvent.Invoke(buildingType);
                     }
+                    DeselectAll();
                 }
             }
         }
