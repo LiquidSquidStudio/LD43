@@ -16,6 +16,14 @@ public class Peasant : MonoBehaviour
     public bool IsInTrasit { get; set; }
 
     //public PeasantEvent creation;
+
+    public float MoveSpeed = 20;
+    public float ReachedLocationRadius = 5;
+
+    Vector2 dir;
+    float distance;
+    Vector3 target;
+
     #endregion
 
     #region Implementation
@@ -23,6 +31,15 @@ public class Peasant : MonoBehaviour
     private void Start()
     {
         //creation.Invoke(this);
+    }
+
+    private void Update()
+    {
+        if (IsInTrasit)
+            MovePeasant();
+
+        if (IsInTrasit && HasReachedLocation())
+            ReachedLocation();
     }
 
     public Peasant(int level = 0, ResourceLocation location = ResourceLocation.CrowdPit, float statBoostBonus = 0.0f, IEnumerable<MaterialResourceType> resourceAffinity = null, bool inTransit = false)
@@ -37,6 +54,37 @@ public class Peasant : MonoBehaviour
     public void Die()
     {
         Destroy(this.transform.gameObject);
+    }
+
+    public void StartMoving(Vector3 tar)
+    {
+        Debug.Log("Starting to move");
+        target = tar;
+        dir = (target - transform.position).normalized;
+        IsInTrasit = true;
+    }
+
+    void MovePeasant()
+    {
+        transform.Translate(dir * MoveSpeed * Time.deltaTime);
+    }
+
+    bool HasReachedLocation()
+    {
+        bool locCheck = false;
+
+        distance = (target - transform.position).magnitude;
+
+        if (distance <= ReachedLocationRadius)
+            locCheck = true;
+
+        return locCheck;
+    }
+
+    public void ReachedLocation()
+    {
+        Debug.Log("peasant has reached the building");
+        Destroy(this.gameObject);
     }
 
     #endregion

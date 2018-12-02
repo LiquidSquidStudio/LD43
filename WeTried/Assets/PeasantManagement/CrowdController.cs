@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CrowdController : MonoBehaviour {
@@ -16,6 +18,12 @@ public class CrowdController : MonoBehaviour {
     public List<Peasant> peasants;
 
     public float CrowdSizeScale;
+    [Space]
+    [Header("UI for number of peasants")]
+    public Slider CrowdSlider;
+    public GameObject NPeasantPanel;
+    public Text CurrentValueLabel;
+    public Text MaxValueLabel;
 
     [Tooltip("Centrepoint of where crowd is")]
     public Transform CrowdPos;
@@ -29,6 +37,12 @@ public class CrowdController : MonoBehaviour {
     [Range(0.0f, 100.0f)]
     private float _affinityChancePercent = 10.0f;
 
+    [SerializeField]
+    private float _moveSpeed = 20;
+
+    [SerializeField]
+    private float _reachedLocationRadius = 5;
+
     [Header("Spawn Points to wire up")]
     public Transform CrowdPit;
     public Transform Mine;
@@ -37,22 +51,51 @@ public class CrowdController : MonoBehaviour {
     public Transform Forest;
     public Transform Lake;
 
+    [Header("Clickable Bulidings")]
+    public ClickableBuildingController[] ClickableBuildings;
+
+    private int _nPeasantsToMove = 1;
+    private ResourceLocation _origin = ResourceLocation.CrowdPit;
 
     private void Awake()
     {
         CrowdPos = gameObject.transform;
     }
 
+    private void OnEnable()
+    {
+        foreach (var building in ClickableBuildings)
+        {
+            building.MoveFromBuildingEvent.AddListener(ShowNumberOfPeasantsPanel);
+            building.MoveToBuildingEvent.AddListener(MovePeasants);
+        }
+    }
+
+    private void OnDisable()
+    {
+
+        foreach (var building in ClickableBuildings)
+        {
+            building.MoveFromBuildingEvent.RemoveListener(ShowNumberOfPeasantsPanel);
+            building.MoveToBuildingEvent.RemoveListener(MovePeasants);
+        }
+
+    }
+
     private void Start()
     {
+
         var spawnedPeasants = SpawnNPeasants(nPeasants);
         peasants = spawnedPeasants;
         rmc.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
+
+        // TODO: Codesmell. This class shouldn't be worried about UI
+        CrowdSlider.onValueChanged.AddListener(delegate { NumberOfPeasantsChanged(); });
     }
 
     #region Implementation
 
-    Peasant SpawnPeasant(ResourceLocation location)
+    public Peasant SpawnPeasant(ResourceLocation location)
     {
         Vector3 spawnPoint = GetPosition(location);
         GameObject peasant = Instantiate(peasantPrefab, NoisyTransformPosition(spawnPoint, CrowdSizeScale), Quaternion.identity,transform);
@@ -68,13 +111,13 @@ public class CrowdController : MonoBehaviour {
         p.StatBoostBonus = statBoost;
         p.ResourceAffinity = affinity;
         p.IsInTrasit = transit;
+        p.MoveSpeed = _moveSpeed;
+        p.ReachedLocationRadius = _reachedLocationRadius;
 
         return p;
     }
 
-    
-
-    List<Peasant> SpawnNPeasants(int n)
+    public List<Peasant> SpawnNPeasants(int n)
     {
         var result = new List<Peasant>();
 
@@ -87,7 +130,7 @@ public class CrowdController : MonoBehaviour {
         return result;
     }
 
-    float RandNorm(float scale)
+    public float RandNorm(float scale)
     {
         float u1 = 1 - Random.value;
         float u2 = 1 - Random.value;
@@ -97,7 +140,7 @@ public class CrowdController : MonoBehaviour {
         return randomNum;
     }
 
-    Vector3 NoisyTransformPosition(Vector3 centrePoint, float scale)
+    public Vector3 NoisyTransformPosition(Vector3 centrePoint, float scale)
     {
         Vector3 positionalNoise = new Vector2(RandNorm(scale), RandNorm(scale));
 
@@ -107,9 +150,52 @@ public class CrowdController : MonoBehaviour {
         spawnPoint += positionalNoise;
         return spawnPoint;
     }
+    
+    public void MovePeasants(ResourceLocation newDestination)
+    {
+        // get peasants from origin
+        int nPeasantsToMove = (int)CrowdSlider.value;
+        var peasants = rmc.GetPeasantsAt(_origin);
+
+        var peasantsToMove = peasants.Take(nPeasantsToMove);
+
+        // move them to new destination
+        foreach (var peasant in peasantsToMove)
+        {
+            peasant.StartMoving(GetPosition(newDestination));
+        }
+
+        // Update UI
+        NPeasantPanel.SetActive(false);
+    }
+
+    public void ShowNumberOfPeasantsPanel(ResourceLocation origin)
+    {
+        // get nubmer of peasants at origin
+        _origin = origin;
+        var nPeasants = rmc.GetNumberOfPeastantsAt(_origin);
+
+        // update UI
+        NPeasantPanel.SetActive(true);
+        CrowdSlider.maxValue = nPeasants;
+        CrowdSlider.value = 1;
+        CrowdSlider.minValue = 1;
+
+        MaxValueLabel.text = nPeasants.ToString();
+        CurrentValueLabel.text = 1.ToString();
+
+    }
+
+    public void NumberOfPeasantsChanged()
+    {
+        // get current value
+        int newValue = (int)CrowdSlider.value;
+        CurrentValueLabel.text = newValue.ToString();
+        _nPeasantsToMove = newValue;
+
+    }
 
     #endregion
-
 
     #region Helpers
 
@@ -180,6 +266,7 @@ public class CrowdController : MonoBehaviour {
 
         return result;
     }
+   
     #endregion
 
 }

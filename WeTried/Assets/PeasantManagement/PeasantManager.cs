@@ -23,8 +23,8 @@ public class PeasantManager : MonoBehaviour
     {
         foreach (var cbc in cbControllers)
         {
-            cbc.clickedThisBuilding.RemoveListener(SetPeasantMoving);
-            cbc.clickedThisBuilding.AddListener(SetPeasantMoving);
+            //cbc.MoveToBuildingEvent.RemoveListener(SetPeasantMoving);
+            //cbc.MoveToBuildingEvent.AddListener(SetPeasantMoving);
         }
     }
 

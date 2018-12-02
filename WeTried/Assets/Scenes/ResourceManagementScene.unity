@@ -1024,7 +1024,7 @@ RectTransform:
   m_Children:
   - {fileID: 1760106432}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1211,15 +1211,28 @@ MonoBehaviour:
     type: 2}
   peasants: []
   CrowdSizeScale: 0.6
+  CrowdSlider: {fileID: 416974805}
+  NPeasantPanel: {fileID: 1760106431}
+  CurrentValueLabel: {fileID: 896641782}
+  MaxValueLabel: {fileID: 916701861}
   CrowdPos: {fileID: 120300038}
   _statBoostMax: 5
   _affinityChancePercent: 10
+  _moveSpeed: 20
+  _reachedLocationRadius: 5
   CrowdPit: {fileID: 1934169220}
   Mine: {fileID: 266963784}
   Farm: {fileID: 809676928}
   BlackSmith: {fileID: 1171083843}
   Forest: {fileID: 537627372}
   Lake: {fileID: 2014900618}
+  ClickableBuildings:
+  - {fileID: 612065100}
+  - {fileID: 1925193790}
+  - {fileID: 1351779438}
+  - {fileID: 218517634}
+  - {fileID: 2096146084}
+  - {fileID: 1188128047}
 --- !u!1 &181742398
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,7 +1470,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingType: 3
-  clickedThisBuilding:
+  MoveToBuildingEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
@@ -2722,7 +2740,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 838711039}
   m_FillRect: {fileID: 1296185707}
   m_HandleRect: {fileID: 838711038}
-  m_Direction: 3
+  m_Direction: 2
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
@@ -3626,7 +3644,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingType: 0
-  clickedThisBuilding:
+  MoveToBuildingEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
@@ -4130,7 +4153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0}
   m_AnchorMax: {x: 0.75, y: 1}
-  m_AnchoredPosition: {x: 0, y: 5}
+  m_AnchoredPosition: {x: 0, y: -5}
   m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &797552187
@@ -4428,7 +4451,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4550,7 +4573,7 @@ GameObject:
   - component: {fileID: 896641783}
   - component: {fileID: 896641782}
   m_Layer: 5
-  m_Name: Max
+  m_Name: CurrentValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4625,7 +4648,7 @@ GameObject:
   - component: {fileID: 916701862}
   - component: {fileID: 916701861}
   m_Layer: 5
-  m_Name: Min
+  m_Name: Max
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4681,7 +4704,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1
+  m_Text: 100
 --- !u!222 &916701862
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5912,7 +5935,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingType: 6
-  clickedThisBuilding:
+  MoveToBuildingEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
@@ -6636,7 +6664,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7042,7 +7070,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingType: 2
-  clickedThisBuilding:
+  MoveToBuildingEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
@@ -8747,34 +8780,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1684742465}
   m_CullTransparentMesh: 0
---- !u!1 &1697688994
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1697688995}
-  m_Layer: 0
-  m_Name: PeasantNumbers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1697688995
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1697688994}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.84778583, y: 1.1418396, z: -7.9383755}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1704423486
 GameObject:
   m_ObjectHideFlags: 0
@@ -9216,7 +9221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1760106432
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9931,7 +9936,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingType: 5
-  clickedThisBuilding:
+  MoveToBuildingEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
@@ -11047,7 +11057,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingType: 4
-  clickedThisBuilding:
+  MoveToBuildingEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
