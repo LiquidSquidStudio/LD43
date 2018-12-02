@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/OlisScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/ResourceManagementScene.unity
+    guid: ceaffc984bc242341bdc3d6c45d86296
   - enabled: 1
     path: Assets/Scenes/WinScene.unity
     guid: 31250f0e63404f54fa66be0be29625ff

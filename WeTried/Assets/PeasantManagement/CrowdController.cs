@@ -17,7 +17,8 @@ public class CrowdController : MonoBehaviour {
 
     public float CrowdSizeScale;
 
-    Transform crowdPos;
+    [Tooltip("Centrepoint of where crowd is")]
+    public Transform CrowdPos;
 
     [SerializeField]
     [Tooltip("Stat boost multiplier")]
@@ -28,9 +29,18 @@ public class CrowdController : MonoBehaviour {
     [Range(0.0f, 100.0f)]
     private float _affinityChancePercent = 10.0f;
 
+    [Header("Spawn Points to wire up")]
+    public Transform CrowdPit;
+    public Transform Mine;
+    public Transform Farm;
+    public Transform BlackSmith;
+    public Transform Forest;
+    public Transform Lake;
+
+
     private void Awake()
     {
-        crowdPos = gameObject.transform;
+        CrowdPos = gameObject.transform;
     }
 
     private void Start()
@@ -41,13 +51,15 @@ public class CrowdController : MonoBehaviour {
         Debug.Log("break point");
     }
 
-    Peasant SpawnPeasant()
+    #region Implementation
+
+    Peasant SpawnPeasant(ResourceLocation location)
     {
-        GameObject peasant = Instantiate(peasantPrefab, NoisyTransform(CrowdSizeScale),Quaternion.identity,transform);
+        Vector3 spawnPoint = GetPosition(location);
+        GameObject peasant = Instantiate(peasantPrefab, NoisyTransformPosition(spawnPoint, CrowdSizeScale), Quaternion.identity,transform);
         var p = peasant.GetComponent<Peasant>();
 
         int level = 0;
-        var location = ResourceLocation.CrowdPit;
         float statBoost = GenerateRandomStatBoost(_statBoostMax);
         var affinity = AssignRandomAffinity(_affinityChancePercent);
         bool transit = false;
@@ -61,13 +73,15 @@ public class CrowdController : MonoBehaviour {
         return p;
     }
 
+    
+
     List<Peasant> SpawnNPeasants(int n)
     {
         var result = new List<Peasant>();
 
         for (int i = 0; i < n; i++)
         {
-            var peasant = SpawnPeasant();
+            var peasant = SpawnPeasant(ResourceLocation.CrowdPit);
             result.Add(peasant);
         }
 
@@ -84,14 +98,23 @@ public class CrowdController : MonoBehaviour {
         return randomNum;
     }
 
-    Vector3 NoisyTransform(float scale)
+    Vector3 NoisyTransformPosition(Vector3 centrePoint, float scale)
     {
-        Vector3 randomNoise = new Vector2(RandNorm(scale) * 1.5f, RandNorm(scale));
+        Vector3 positionalNoise = new Vector2(RandNorm(scale), RandNorm(scale));
+
+        //Vector3 randomNoise = new Vector2(RandNorm(scale) * 1.5f, RandNorm(scale));
         //Vector3 randomNoise = new Vector2(Random.Range(-1.5f, 1.5f), Random.Range(-1f, 1f)) * scale;
-        Vector3 spawnPoint = crowdPos.position;
-        spawnPoint += randomNoise;
+        Vector3 spawnPoint = centrePoint;
+        Debug.Log("Spawn Point: " + spawnPoint);
+        spawnPoint += positionalNoise;
+        Debug.Log("Randomised spawn Point: " + spawnPoint);
         return spawnPoint;
     }
+
+    #endregion
+
+
+    #region Helpers
 
     private List<MaterialResourceType> AssignRandomAffinity(float affinityPercent)
     {
@@ -124,4 +147,42 @@ public class CrowdController : MonoBehaviour {
     {
         return Random.Range(0.0f, statBoostMax);
     }
+
+    private Vector3 GetPosition(ResourceLocation location)
+    {
+        Vector3 result;
+        switch (location)
+        {
+            case ResourceLocation.CrowdPit:
+                result = CrowdPit.position;
+                break;
+            case ResourceLocation.Castle:
+                result = Vector3.zero;
+                break;
+            case ResourceLocation.Mine:
+                result = Mine.position;
+                break;
+            case ResourceLocation.Farm:
+                result = Farm.position;
+                break;
+            case ResourceLocation.BlackSmiths:
+                result = BlackSmith.position;
+                break;
+            case ResourceLocation.SacrificialPen:
+                result = Vector3.zero;
+                break;
+            case ResourceLocation.Forest:
+                result = Forest.position;
+                break;
+            case ResourceLocation.Lake:
+                result = Lake.position;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException("location", "Unknown location selected to be spawned.");
+        }
+
+        return result;
+    }
+    #endregion
+
 }
