@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 5247640}
   - component: {fileID: 5247639}
   - component: {fileID: 5247638}
+  - component: {fileID: 5247641}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -207,6 +208,22 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &5247641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 5247636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da993d9f185098a4684baba054401c43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throneRoomSprites:
+  - {fileID: 21300000, guid: 680d786df296f654487ef49ebeae8890, type: 3}
+  - {fileID: 21300002, guid: 680d786df296f654487ef49ebeae8890, type: 3}
+  - {fileID: 21300004, guid: 680d786df296f654487ef49ebeae8890, type: 3}
+  selectedSprite: 1
 --- !u!1 &257677108
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,6 +309,8 @@ GameObject:
   - component: {fileID: 417331012}
   - component: {fileID: 417331014}
   - component: {fileID: 417331013}
+  - component: {fileID: 417331015}
+  - component: {fileID: 417331016}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -329,7 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -337,12 +356,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 484a9624d893f0b45ba9407665e494db, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -357,6 +376,41 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 417331011}
   m_CullTransparentMesh: 0
+--- !u!114 &417331015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 417331011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
+--- !u!114 &417331016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 417331011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7e8e71a489dff4eb87d04434362e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sobStories:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ssIndex: 0
 --- !u!1 &640150348
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,10 +724,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c341f3544db1ac446ae6143715d37046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quesionTextElement: {fileID: 0}
-  buttons: []
+  quesionTextElement: {fileID: 417331013}
+  buttons:
+  - {fileID: 640150350}
+  - {fileID: 2041408450}
   quizEndCanvas: {fileID: 0}
-  questions: []
+  questions:
+  - QuestionText: 
+    Answers:
+    - Does Mother Esobel Deserve to die?
+    - What about this old man?
+    Responses:
+    - So be it. The old gods don't seem to want to save us against the Wyrm anyway....
+      So why should we care for their faithful?!
+    - I... don't think I've actually seen him in the town before.... How did you get
+      in here!! When
   waitTime: 0
 --- !u!4 &1193879572
 Transform:
@@ -701,8 +766,9 @@ GameObject:
   - component: {fileID: 1236113234}
   - component: {fileID: 1236113233}
   - component: {fileID: 1236113235}
+  - component: {fileID: 1236113236}
   m_Layer: 5
-  m_Name: Choices
+  m_Name: SacrificeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -780,6 +846,21 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
+--- !u!111 &1236113236
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1236113231}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 33f253c7e31d72040a9cae5d1e345eb8, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 33f253c7e31d72040a9cae5d1e345eb8, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1602121217
 GameObject:
   m_ObjectHideFlags: 0
