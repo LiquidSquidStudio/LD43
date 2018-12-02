@@ -44,11 +44,11 @@ public class ResourceManagementCore : MonoBehaviour
     public void Awake()
     {
         Debug.Log("Resource management core Awake");
+        Initialise();
     }
     public void Start()
     {
         Debug.Log("Resource management core Start");
-        Initialise();
         if (OnUIUpdate != null) OnUIUpdate();
     }
     #endregion

@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+//[System.Serializable]
+//public class PeasantEvent : UnityEvent<Peasant> { }
 
 public class Peasant : MonoBehaviour
 {
@@ -11,9 +15,15 @@ public class Peasant : MonoBehaviour
     public IEnumerable<MaterialResourceType> ResourceAffinity { get; set; }
     public bool IsInTrasit { get; set; }
 
+    //public PeasantEvent creation;
     #endregion
 
     #region Implementation
+
+    private void Start()
+    {
+        //creation.Invoke(this);
+    }
 
     public Peasant(int level = 0, ResourceLocation location = ResourceLocation.CrowdPit, float statBoostBonus = 0.0f, IEnumerable<MaterialResourceType> resourceAffinity = null, bool inTransit = false)
     {
