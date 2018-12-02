@@ -162,7 +162,7 @@ public class CrowdController : MonoBehaviour {
         // move them to new destination
         foreach (var peasant in peasantsToMove)
         {
-            peasant.StartMoving(GetPosition(newDestination));
+            peasant.StartMoving(newDestination, GetPosition(newDestination));
         }
 
         // Update UI

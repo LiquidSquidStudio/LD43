@@ -1218,7 +1218,7 @@ MonoBehaviour:
   CrowdPos: {fileID: 120300038}
   _statBoostMax: 5
   _affinityChancePercent: 10
-  _moveSpeed: 20
+  _moveSpeed: 1
   _reachedLocationRadius: 5
   CrowdPit: {fileID: 1934169220}
   Mine: {fileID: 266963784}
