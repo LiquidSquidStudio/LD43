@@ -13,11 +13,15 @@ public class ClickableBuildingController : MonoBehaviour {
     public ResourceLocation buildingType;
     public BuildingUIEvent clickedThisBuilding;
 
-    public Image SelectedImage;
+    public Image FirstSlectImage;
+    public Image SecondSelectImage;
 
     public static HashSet<ClickableBuildingController> allSelectableBuildings = new HashSet<ClickableBuildingController>();
     public static HashSet<ClickableBuildingController> currentlySelectedBuildings = new HashSet<ClickableBuildingController>();
     private bool _selected = false;
+
+    public bool CanBeOrigin = true;
+    public bool CanBeDestination = true;
 
     private void Start()
     {
@@ -29,17 +33,34 @@ public class ClickableBuildingController : MonoBehaviour {
         clickedThisBuilding.Invoke(buildingType);
         Debug.Log("You clicked the " + buildingType);
 
-        if (currentlySelectedBuildings.Count > 2)
+        if (currentlySelectedBuildings.Count > 1)
         {
             DeselectAll();
-        } else
+        }
+        else if (currentlySelectedBuildings.Count == 1)
         {
-            ToggleSelectionState();
-
+            if (currentlySelectedBuildings.Contains(this))
+            {
+                ToggleSelectionState(FirstSlectImage);
+            }
+            else
+            {
+                if (CanBeDestination)
+                {
+                    ToggleSelectionState(SecondSelectImage);
+                }
+            }
+        }
+        else
+        {
+            if (CanBeOrigin)
+            {
+                ToggleSelectionState(FirstSlectImage);
+            }
         }
     }
 
-    private void ToggleSelectionState()
+    private void ToggleSelectionState(Image toToggle)
     {
         _selected = !_selected;
 
@@ -50,12 +71,15 @@ public class ClickableBuildingController : MonoBehaviour {
         {
             currentlySelectedBuildings.Remove(this);
         }
-        SelectedImage.enabled = _selected;
+
+        toToggle.enabled = _selected;
     }
 
     public void Deselect()
     {
         _selected = false;
+        FirstSlectImage.enabled = false;
+        SecondSelectImage.enabled = false;
     }
 
     private void DeselectAll()
@@ -63,13 +87,8 @@ public class ClickableBuildingController : MonoBehaviour {
         foreach (var building in allSelectableBuildings)
         {
             building.Deselect();
+            currentlySelectedBuildings.Remove(building);
         }
     }
 
-    void ToggleImageAppearance()
-    {
-
-    }
-
-   
 }
