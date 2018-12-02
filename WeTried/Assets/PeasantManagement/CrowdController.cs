@@ -48,7 +48,6 @@ public class CrowdController : MonoBehaviour {
         var spawnedPeasants = SpawnNPeasants(nPeasants);
         peasants = spawnedPeasants;
         rmc.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
-        Debug.Log("break point");
     }
 
     #region Implementation
@@ -105,9 +104,7 @@ public class CrowdController : MonoBehaviour {
         //Vector3 randomNoise = new Vector2(RandNorm(scale) * 1.5f, RandNorm(scale));
         //Vector3 randomNoise = new Vector2(Random.Range(-1.5f, 1.5f), Random.Range(-1f, 1f)) * scale;
         Vector3 spawnPoint = centrePoint;
-        Debug.Log("Spawn Point: " + spawnPoint);
         spawnPoint += positionalNoise;
-        Debug.Log("Randomised spawn Point: " + spawnPoint);
         return spawnPoint;
     }
 
