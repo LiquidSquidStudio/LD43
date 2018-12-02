@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+
+[System.Serializable]
+public class CoreEvent : UnityEvent { }
 
 public class ResourceManagementCore : MonoBehaviour
 {
     #region Property
     public GameState CurrentGameState { get; private set; }
 
-    public delegate void UpdateUI();
-    public event UpdateUI OnUIUpdate;
+    public CoreEvent UpdateUIEvent;
+    public CoreEvent NewDayEvent;
+    public CoreEvent DayEndEvent;
+
+
     public int CurrentDay { get; private set; }
     #endregion
 
@@ -62,17 +69,20 @@ public class ResourceManagementCore : MonoBehaviour
 
         // Let the Dragon purrr
         LetTheDragonLoose(gameState);
-
     }
 
     public void OnDayEnd()
     {
+        if (DayEndEvent != null) DayEndEvent.Invoke();
         CurrentDay++;
         Debug.Log("End of the day Detected!");
         DayEnd(CurrentGameState);
 
         //DisplayManager.UpdateUI(ResourceState, _currentDay);
-        if (OnUIUpdate != null) OnUIUpdate();
+
+        if (UpdateUIEvent != null) UpdateUIEvent.Invoke();
+        if (NewDayEvent != null) NewDayEvent.Invoke();
+
     }
 
     public void OnAttackDragon()

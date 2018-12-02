@@ -10,7 +10,7 @@ public class CrowdController : MonoBehaviour {
 
     // Using this class to control the motion, selection and passing on of peasants on from the crowd to the peasant manager
 
-    public ResourceManagementCore rmc;
+    public ResourceManagementCore ResourceCore;
     [Space]
     [Range(0, 200)]
     public int nPeasants = 100;
@@ -50,6 +50,7 @@ public class CrowdController : MonoBehaviour {
     public Transform BlackSmith;
     public Transform Forest;
     public Transform Lake;
+    public Transform SACRIFICE;
 
     [Header("Clickable Bulidings")]
     public ClickableBuildingController[] ClickableBuildings;
@@ -64,21 +65,12 @@ public class CrowdController : MonoBehaviour {
 
     private void OnEnable()
     {
-        foreach (var building in ClickableBuildings)
-        {
-            building.MoveFromBuildingEvent.AddListener(ShowNumberOfPeasantsPanel);
-            building.MoveToBuildingEvent.AddListener(MovePeasants);
-        }
+        SubscribeToEvents();
     }
 
     private void OnDisable()
     {
-
-        foreach (var building in ClickableBuildings)
-        {
-            building.MoveFromBuildingEvent.RemoveListener(ShowNumberOfPeasantsPanel);
-            building.MoveToBuildingEvent.RemoveListener(MovePeasants);
-        }
+        UnsubscribeFromEvents();
 
     }
 
@@ -87,7 +79,7 @@ public class CrowdController : MonoBehaviour {
 
         var spawnedPeasants = SpawnNPeasants(nPeasants);
         peasants = spawnedPeasants;
-        rmc.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
+        ResourceCore.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
 
         // TODO: Codesmell. This class shouldn't be worried about UI
         CrowdSlider.onValueChanged.AddListener(delegate { NumberOfPeasantsChanged(); });
@@ -146,23 +138,24 @@ public class CrowdController : MonoBehaviour {
 
         //Vector3 randomNoise = new Vector2(RandNorm(scale) * 1.5f, RandNorm(scale));
         //Vector3 randomNoise = new Vector2(Random.Range(-1.5f, 1.5f), Random.Range(-1f, 1f)) * scale;
-        Vector3 spawnPoint = centrePoint;
-        spawnPoint += positionalNoise;
-        return spawnPoint;
+        Vector3 newPosition = centrePoint;
+        newPosition += positionalNoise;
+        return newPosition;
     }
     
     public void MovePeasants(ResourceLocation newDestination)
     {
         // get peasants from origin
         int nPeasantsToMove = (int)CrowdSlider.value;
-        var peasants = rmc.GetPeasantsAt(_origin);
+        var peasants = ResourceCore.GetPeasantsAt(_origin);
 
-        var peasantsToMove = peasants.Take(nPeasantsToMove);
+        var peasantsToMove = peasants.Where(p => p.IsInTrasit == false).Take(nPeasantsToMove);
 
         // move them to new destination
         foreach (var peasant in peasantsToMove)
         {
-            peasant.StartMoving(newDestination, GetPosition(newDestination));
+            var destination = NoisyTransformPosition(GetPosition(newDestination), CrowdSizeScale);
+            peasant.StartMoving(newDestination, destination);
         }
 
         // Update UI
@@ -173,7 +166,7 @@ public class CrowdController : MonoBehaviour {
     {
         // get nubmer of peasants at origin
         _origin = origin;
-        var nPeasants = rmc.GetNumberOfPeastantsAt(_origin);
+        int nPeasants = ResourceCore.GetPeasantsAt(_origin).Where(p => p.IsInTrasit == false).Count();
 
         // update UI
         NPeasantPanel.SetActive(true);
@@ -195,9 +188,47 @@ public class CrowdController : MonoBehaviour {
 
     }
 
+    public void MoveAllPeasantsTo(ResourceLocation location)
+    {
+        var peasants = ResourceCore.CurrentGameState.GetPeasants();
+
+        foreach (var peasant in peasants)
+        {
+            peasant.CurrentLocation = location;
+            peasant.transform.position = NoisyTransformPosition(GetPosition(location), CrowdSizeScale);
+        }
+    }
+
     #endregion
 
     #region Helpers
+
+    private void SubscribeToEvents()
+    {
+        ResourceCore.NewDayEvent.AddListener(OnNewDay);
+
+        foreach (var building in ClickableBuildings)
+        {
+            building.MoveFromBuildingEvent.AddListener(ShowNumberOfPeasantsPanel);
+            building.MoveToBuildingEvent.AddListener(MovePeasants);
+        }
+    }
+
+    private void OnNewDay()
+    {
+        MoveAllPeasantsTo(ResourceLocation.CrowdPit);
+    }
+
+    private void UnsubscribeFromEvents()
+    {
+        ResourceCore.NewDayEvent.RemoveListener(OnNewDay);
+
+        foreach (var building in ClickableBuildings)
+        {
+            building.MoveFromBuildingEvent.RemoveListener(ShowNumberOfPeasantsPanel);
+            building.MoveToBuildingEvent.RemoveListener(MovePeasants);
+        }
+    }
 
     private List<MaterialResourceType> AssignRandomAffinity(float affinityPercent)
     {
@@ -252,7 +283,7 @@ public class CrowdController : MonoBehaviour {
                 result = BlackSmith.position;
                 break;
             case ResourceLocation.SacrificialPen:
-                result = Vector3.zero;
+                result = SACRIFICE.position;
                 break;
             case ResourceLocation.Forest:
                 result = Forest.position;

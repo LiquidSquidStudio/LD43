@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResourceManagementTestUIManager : MonoBehaviour
+public class ResourceManagementUIManager : MonoBehaviour
 {
     #region Public Fields
     [Header("Wire up before starting the game - Core Logic.")]
@@ -38,13 +38,13 @@ public class ResourceManagementTestUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        // whenever you subscribe it's important to unsubscribe
-        CoreLogic.OnUIUpdate += UpdateUI;
+        CoreLogic.UpdateUIEvent.AddListener(UpdateUI);
+
     }
 
     private void OnDisable()
     {
-        CoreLogic.OnUIUpdate -= UpdateUI;
+        CoreLogic.UpdateUIEvent.RemoveListener(UpdateUI);
     }
 
     #endregion
