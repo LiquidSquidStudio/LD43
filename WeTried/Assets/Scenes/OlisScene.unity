@@ -5401,6 +5401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9de11c4e1b315941a92009306fc25fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoreLogic: {fileID: 2119484704}
   TotalPeasants: {fileID: 385774613}
   TotalWood: {fileID: 1550659885}
   TotalFood: {fileID: 1684742467}
@@ -7081,11 +7082,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da1cc0af1f042c4c8d9eaabc4f6d64e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayManager: {fileID: 1636133022}
   _nPeasantsOnStartup: 100
   _statBoostMax: 5
   _affinityChancePercent: 10
-  _currentDay: 1
 --- !u!4 &2119484705
 Transform:
   m_ObjectHideFlags: 0

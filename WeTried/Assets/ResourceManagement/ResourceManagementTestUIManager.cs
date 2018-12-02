@@ -8,6 +8,9 @@ using UnityEngine.UI;
 public class ResourceManagementTestUIManager : MonoBehaviour
 {
     #region Public Fields
+    [Header("Wire up before starting the game - Core Logic.")]
+    public ResourceManagementCore CoreLogic;
+
     [Header("Wire up before starting the game - UI Text elements to update.")]
     public Text TotalPeasants;
     public Text TotalWood;
@@ -25,7 +28,35 @@ public class ResourceManagementTestUIManager : MonoBehaviour
     public Text ForrestPeasants;
     #endregion
 
+    #region Unity Life Cycles
+
+    private void Start()
+    {
+        if (CoreLogic == null) throw new InvalidOperationException("For the UI manager CoreLogic reference should not be null");
+
+    }
+
+    private void OnEnable()
+    {
+        // whenever you subscribe it's important to unsubscribe
+        CoreLogic.OnUIUpdate += UpdateUI;
+    }
+
+    private void OnDisable()
+    {
+        CoreLogic.OnUIUpdate -= UpdateUI;
+    }
+
+    #endregion
+
     #region Implementation
+
+    public void UpdateUI()
+    {
+        var resourceState = CoreLogic.CurrentGameState.ResourceState;
+        var currentDay = CoreLogic.CurrentGameState.CurrentDay;
+        UpdateUI(resourceState, currentDay);
+    }
 
     public void UpdateUI(GameResourceState resourceState, int currentDay)
     {
