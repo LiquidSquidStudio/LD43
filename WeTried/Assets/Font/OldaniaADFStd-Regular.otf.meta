@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 932f76271717061418e5d12a42045a89
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Oldania ADF Std
+  fontNames:
+  - Oldania ADF Std
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 484a9624d893f0b45ba9407665e494db, type: 3}
+  - {fileID: 12800000, guid: 59d378ba48473be439c1c98b44721427, type: 3}
+  - {fileID: 12800000, guid: 3bd8c6ec9723bcd46a41b7bcbbf5b625, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
