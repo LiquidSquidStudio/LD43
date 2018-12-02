@@ -21,18 +21,18 @@ public class ResourceManagementCore : MonoBehaviour
     //#endregion
 
     #region PrivateFields
-    [SerializeField]
-    [Tooltip("Number of peasants on game start")]
-    private int _nPeasantsOnStartup = 5;
+    //[SerializeField]
+    //[Tooltip("Number of peasants on game start")]
+    //private int _nPeasantsOnStartup = 5;
 
-    [SerializeField]
-    [Tooltip("Stat boost multiplier")]
-    private float _statBoostMax = 5;
+    //[SerializeField]
+    //[Tooltip("Stat boost multiplier")]
+    //private float _statBoostMax = 5;
 
-    [SerializeField]
-    [Tooltip("Percentage chance of gaining a random affinity")]
-    [Range(0.0f, 100.0f)]
-    private float _affinityChancePercent = 10.0f;
+    //[SerializeField]
+    //[Tooltip("Percentage chance of gaining a random affinity")]
+    //[Range(0.0f, 100.0f)]
+    //private float _affinityChancePercent = 10.0f;
 
 
     private int _winSceneIndex = 1;
@@ -49,7 +49,6 @@ public class ResourceManagementCore : MonoBehaviour
     public void Start()
     {
         Debug.Log("Resource management core Start");
-        if (OnUIUpdate != null) OnUIUpdate();
     }
     #endregion
 
@@ -92,7 +91,7 @@ public class ResourceManagementCore : MonoBehaviour
     {
         if (CurrentGameState == null)
         {
-            CurrentGameState = new GameState(_nPeasantsOnStartup, _affinityChancePercent, _statBoostMax);
+            CurrentGameState = new GameState();
         }
 
         Random.InitState(Guid.NewGuid().GetHashCode()); // pretty much guarantees uniqueness between gameruns

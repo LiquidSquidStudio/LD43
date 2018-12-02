@@ -13,20 +13,21 @@ public class GameState
     public int CurrentDay { get; private set; }
 
     #region Constructor
-    public GameState(int nPeasants, float affinityPercent, float statBoostMax)
+    public GameState()
     {
-        Initialise(nPeasants, affinityPercent, statBoostMax);
+        Initialise();
     }
 
-    private void Initialise(int nPeasants, float affinityPercent, float statBoostMax)
+    private void Initialise()
     {
         if (King == null) { King = new KingData(); }
         if (Dragon == null) { Dragon = new DragonData(); }
         if (ResourceState == null)
         {
 
-            var peasants = GeneratePeasants(nPeasants, affinityPercent, statBoostMax);
-            ResourceState = new GameResourceState(peasants: peasants);
+            //var peasants = GeneratePeasants(nPeasants, affinityPercent, statBoostMax);
+            //ResourceState = new GameResourceState(peasants: peasants);
+            ResourceState = new GameResourceState();
         }
     }
     #endregion
@@ -106,7 +107,12 @@ public class GameState
     {
         return ResourceState.nPeasants;
     }
-    
+
+    public int GetNumberOfPeasantsAt(ResourceLocation location)
+    {
+        return ResourceState.Peasants.Where(p => p.CurrentLocation == location).Count();
+    }
+
     #endregion
 
     #region Private helpers

@@ -33,7 +33,7 @@ public class ResourceManagementTestUIManager : MonoBehaviour
     private void Start()
     {
         if (CoreLogic == null) throw new InvalidOperationException("For the UI manager CoreLogic reference should not be null");
-
+        UpdateUI();
     }
 
     private void OnEnable()
@@ -69,13 +69,13 @@ public class ResourceManagementTestUIManager : MonoBehaviour
         CurrentDay.text = grs.CurrentDay.ToString();
 
         var peasants = grs.ResourceState.Peasants;
-        MinePeasants.text = grs.GetPeasantsAt(ResourceLocation.Mine).ToString();
+        MinePeasants.text = grs.GetNumberOfPeasantsAt(ResourceLocation.Mine).ToString();
         FarmPeasants.text = grs.GetPeasantsAt(ResourceLocation.Farm).ToString();
-        BlackSmithPeasants.text = grs.GetPeasantsAt(ResourceLocation.BlackSmiths).ToString();
-        CrowdPeasants.text = grs.GetPeasantsAt(ResourceLocation.CrowdPit).ToString();
-        SacrificePesants.text = grs.GetPeasantsAt(ResourceLocation.SacrificialPen).ToString();
-        LakePeasants.text = grs.GetPeasantsAt(ResourceLocation.Lake).ToString();
-        ForestPeasants.text = grs.GetPeasantsAt(ResourceLocation.Forest).ToString();
+        BlackSmithPeasants.text =   grs.GetNumberOfPeasantsAt(ResourceLocation.BlackSmiths).ToString();
+        CrowdPeasants.text =        grs.GetNumberOfPeasantsAt(ResourceLocation.CrowdPit).ToString();
+        SacrificePesants.text =     grs.GetNumberOfPeasantsAt(ResourceLocation.SacrificialPen).ToString();
+        LakePeasants.text =         grs.GetNumberOfPeasantsAt(ResourceLocation.Lake).ToString();
+        ForestPeasants.text =       grs.GetNumberOfPeasantsAt(ResourceLocation.Forest).ToString();
     }
 
     #endregion

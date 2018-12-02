@@ -10,18 +10,14 @@ public class CrowdController : MonoBehaviour {
 
     public ResourceManagementCore rmc;
     [Space]
-    [Range(0, 100)]
-    public int nPeasants;
+    [Range(0, 200)]
+    public int nPeasants = 100;
     public GameObject peasantPrefab;
     public List<Peasant> peasants;
 
     public float CrowdSizeScale;
 
     Transform crowdPos;
-
-    [SerializeField]
-    [Tooltip("Number of peasants on game start")]
-    private int _nPeasantsOnStartup = 5;
 
     [SerializeField]
     [Tooltip("Stat boost multiplier")]
@@ -39,12 +35,13 @@ public class CrowdController : MonoBehaviour {
 
     private void Start()
     {
-        SpawnNPeasants(nPeasants);
-        rmc.CurrentGameState.ResourceState.UpdatePeastants(peasants);
+        var spawnedPeasants = SpawnNPeasants(nPeasants);
+        peasants = spawnedPeasants;
+        rmc.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
         Debug.Log("break point");
     }
 
-    void SpawnPeasant()
+    Peasant SpawnPeasant()
     {
         GameObject peasant = Instantiate(peasantPrefab, NoisyTransform(CrowdSizeScale),Quaternion.identity,transform);
         var p = peasant.GetComponent<Peasant>();
@@ -61,15 +58,20 @@ public class CrowdController : MonoBehaviour {
         p.ResourceAffinity = affinity;
         p.IsInTrasit = transit;
 
-        peasants.Add(p);
+        return p;
     }
 
-    void SpawnNPeasants(int n)
+    List<Peasant> SpawnNPeasants(int n)
     {
+        var result = new List<Peasant>();
+
         for (int i = 0; i < n; i++)
         {
-            SpawnPeasant();
+            var peasant = SpawnPeasant();
+            result.Add(peasant);
         }
+
+        return result;
     }
 
     float RandNorm(float scale)
@@ -90,35 +92,6 @@ public class CrowdController : MonoBehaviour {
         spawnPoint += randomNoise;
         return spawnPoint;
     }
-
-    //private IEnumerable<Peasant> GeneratePeasants(int nPeasants, float affinityPercent, float statBoostMax)
-    //{
-    //    var peasants = new List<Peasant>();
-
-    //    int count = 0;
-
-    //    while (count < nPeasants)
-    //    {
-    //        int level = 0;
-    //        var location = ResourceLocation.CrowdPit;
-    //        float statBoost = GenerateRandomStatBoost(statBoostMax);
-    //        var affinity = AssignRandomAffinity(affinityPercent);
-    //        bool transit = false;
-
-    //        peasants.Add(
-    //            new Peasant(
-    //                level: level,
-    //                location: location,
-    //                statBoostBonus: statBoost,
-    //                resourceAffinity: affinity,
-    //                inTransit: transit
-    //            ));
-
-    //        count++;
-    //    }
-
-    //    return peasants;
-    //}
 
     private List<MaterialResourceType> AssignRandomAffinity(float affinityPercent)
     {
