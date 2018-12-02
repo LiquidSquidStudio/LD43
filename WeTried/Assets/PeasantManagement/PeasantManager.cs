@@ -4,13 +4,20 @@ public class PeasantManager : MonoBehaviour
 {
     // Using this to pass in the correct transform into the peasants for movement;
     // Take the location of the mouse and determine if a location and where
-    public Transform[] entranceLocs;
+
+    public GameObject[] buildings;
     public GameObject peasantPrefab;    // Gonna change this later, shouldn't be spawned in or anything, but just doing it this way for now
     public int targetLocIndex;
 
     GameObject selectedPeasant;
 
-    public ClickableBuildingController[] cbControllers;
+    ClickableBuildingController[] cbControllers;
+    Transform[] entranceLocs;
+
+    private void Awake()
+    {
+        InitializeBuildingComponents();
+    }
 
     private void Start()
     {
@@ -21,17 +28,25 @@ public class PeasantManager : MonoBehaviour
         }
     }
 
+    void InitializeBuildingComponents()
+    {
+        cbControllers = new ClickableBuildingController[buildings.Length];
+        entranceLocs= new Transform[buildings.Length];
+        for (int i = 0; i < buildings.Length; i++)
+        {
+            ClickableBuildingController cbc = buildings[i].GetComponent<ClickableBuildingController>();
+            cbControllers[i] = cbc;
+            Transform entrance = buildings[i].GetComponentInChildren<Transform>();
+            entranceLocs[i] = entrance;
+        }
+    }
+
     void Update ()
     {
         if (selectedPeasant == null)
         {
             selectedPeasant = SelectNextPeasant();
         }
-
-        //if (Input.GetKeyDown("space"))
-        //{
-        //    SetPeasantMoving(targetLocIndex);
-        //}
 	}
 
     // At the moment we're just spawning in a new one, but need to get a crowd manager/list of the peasants from oli whenever we're incorporating them
