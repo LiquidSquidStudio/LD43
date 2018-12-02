@@ -67,10 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec92fe70bab143940aa9601ec07fb404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creation:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: PeasantEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!212 &212077036828968822
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -105,7 +101,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1000
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ef2890f56088c3045a86acd6ae4c685e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
