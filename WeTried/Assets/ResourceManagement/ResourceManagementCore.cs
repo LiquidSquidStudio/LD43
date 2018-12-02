@@ -8,15 +8,17 @@ using Random = UnityEngine.Random;
 public class ResourceManagementCore : MonoBehaviour
 {
     #region Property
-    public KingData King { get; private set; }
-    public DragonData Dragon { get; private set; }
-    public GameResourceState ResourceState { get; private set; }
+    public GameState CurrentGameState { get; private set; }
+
+    public delegate void UpdateUI();
+    public event UpdateUI OnUIUpdate;
+    public int CurrentDay { get; private set; }
     #endregion
 
-    #region Public Fields
-    [Header("Dependencies To be wired up")]
-    public ResourceManagementTestUIManager DisplayManager;
-    #endregion
+    //#region Public Fields
+    //[Header("Dependencies To be wired up")]
+    //public ResourceManagementTestUIManager DisplayManager;
+    //#endregion
 
     #region PrivateFields
     [SerializeField]
@@ -32,10 +34,6 @@ public class ResourceManagementCore : MonoBehaviour
     [Range(0.0f, 100.0f)]
     private float _affinityChancePercent = 10.0f;
 
-    [SerializeField]
-    [Tooltip("Percentage chance of gaining a random affinity")]
-    [Range(0, 10)]
-    private int _currentDay = 1;
 
     private int _winSceneIndex = 1;
     private int _loseSceneIndex = 2;
@@ -51,189 +49,36 @@ public class ResourceManagementCore : MonoBehaviour
     {
         Debug.Log("Resource management core Start");
         Initialise();
-        DisplayManager.UpdateUI(ResourceState, _currentDay);
+        if (OnUIUpdate != null) OnUIUpdate();
     }
-
     #endregion
 
     #region Implementation
 
-    #region For the UI
 
-    public void AddWoodResource(int incrementValue)
-    {
-        AddMaterialResource(MaterialResourceType.Wood, incrementValue);
-    }
-
-    public void SubtractWoodResource(int decrementValue)
-    {
-        SubtractMaterialResource(MaterialResourceType.Wood, decrementValue);
-    }
-
-    public int GetWoodResource()
-    {
-        return ResourceState.nWoodResources;
-    }
-
-    public void AddIronResource(int incrementValue)
-    {
-        AddMaterialResource(MaterialResourceType.Iron, incrementValue);
-    }
-
-    public void SubtractIronResource(int decrementValue)
-    {
-        SubtractMaterialResource(MaterialResourceType.Iron, decrementValue);
-    }
-
-    public int GetIronResource()
-    {
-        return ResourceState.nIronResources;
-    }
-
-    public void AddFoodResource(int incrementValue)
-    {
-        AddMaterialResource(MaterialResourceType.Food, incrementValue);
-    }
-
-    public void SubtractFoodResource(int decrementValue)
-    {
-        SubtractMaterialResource(MaterialResourceType.Food, decrementValue);
-    }
-
-    public int GetFoodResource()
-    {
-        return ResourceState.nFoodResources;
-    }
-
-    public void AddWeaponResource(int incrementValue)
-    {
-        AddMaterialResource(MaterialResourceType.Weapon, incrementValue);
-    }
-
-    public void SubtractWeaponResource(int decrementValue)
-    {
-        SubtractMaterialResource(MaterialResourceType.Weapon, decrementValue);
-    }
-
-    public int GetWeaponResource()
-    {
-        return ResourceState.nWeaponResources;
-    }
-
-    public void AddPeasant(int incrementValue)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SubtractPeasantResource(int decrementValue)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<Peasant> GetPeasants()
-    {
-        return ResourceState.Peasants;
-    }
-
-    public int GetNumberOfPeasants()
-    {
-        return ResourceState.nPeasants;
-    }
-
-    #endregion
-
-    #region Core Game mechanics
-
-    public GameResourceState DayEnd(GameResourceState currentGameState)
+    public void DayEnd(GameState gameState)
     {
         // Generate resources
-        GenerateResources(currentGameState);
+        GenerateResources(gameState);
 
         // Let the Dragon purrr
-        LetTheDragonLoose(currentGameState, Dragon, King);
+        LetTheDragonLoose(gameState);
 
-        return ResourceState;
-    }
-
-    private void LetTheDragonLoose(GameResourceState currentGameState, DragonData dragon, KingData king)
-    {
-        int dailyAppetite = dragon.DailyAppetitite;
-        int nPeasantsInPen = GetNumberOfPeastantsAt(ResourceLocation.SacrificialPen);
-
-        EatHumans(GetPeasantsAt(ResourceLocation.SacrificialPen));
-
-        if (dailyAppetite > nPeasantsInPen)
-        {
-            AttackRandomLocation(currentGameState);
-        }
-    }
-
-    private void AttackRandomLocation(GameResourceState currentGameState)
-    {
-        var randomLocation = SelectRandomLocation();
-
-        var peastantsToDie = GetPeasantsAt(randomLocation);
-
-        foreach (var peasant in peastantsToDie)
-        {
-            peasant.Die();
-        }
-
-    }
-
-    private void EatHumans(IEnumerable<Peasant> peasants)
-    {
-        var allPeasants = GetPeasants().ToList();
-        
-        foreach (var peasant in peasants)
-        {
-            allPeasants.Remove(peasant);
-            //peasant.Die();
-        }
-
-        ResourceState.UpdatePeastants(allPeasants);
-    }
-
-    private void GenerateResources(GameResourceState currentState)
-    {
-        // Weapon
-        var nPeasantsAtWeapon = GetNumberOfPeastantsAt(ResourceLocation.BlackSmiths);
-        GenerateWeapons(GetWoodResource(), GetIronResource(), nPeasantsAtWeapon);
-
-        // Food
-        var nPeasantsAtFarm = GetNumberOfPeastantsAt(ResourceLocation.Farm);
-        AddWeaponResource(nPeasantsAtFarm);
-
-        // Iron
-        var nPeasantsAtMine = GetNumberOfPeastantsAt(ResourceLocation.Mine);
-        AddWeaponResource(nPeasantsAtMine);
-
-        // Wood
-        var nPeasantsAtForrest = GetNumberOfPeastantsAt(ResourceLocation.Forrest);
-        AddWeaponResource(nPeasantsAtForrest);
-
-    }
-
-    private void GenerateWeapons(int nWood, int nIron, int nPeasants)
-    {
-        var nWeaponsToCreate = new int[] { nWood, nIron, nPeasants }.Min();
-
-        SubtractWoodResource(nWeaponsToCreate);
-        SubtractIronResource(nWeaponsToCreate);
-        AddWeaponResource(nWeaponsToCreate);
     }
 
     public void OnDayEnd()
     {
-        _currentDay++;
+        CurrentDay++;
         Debug.Log("End of the day Detected!");
-        var updatedResources = DayEnd(ResourceState);
-        DisplayManager.UpdateUI(ResourceState, _currentDay);
+        DayEnd(CurrentGameState);
+
+        //DisplayManager.UpdateUI(ResourceState, _currentDay);
+        if (OnUIUpdate != null) OnUIUpdate();
     }
 
     public void OnAttackDragon()
     {
-        var result = FightWithDragon(Dragon, GetWeaponResource(), GetPeasants());
+        var result = FightWithDragon(CurrentGameState.Dragon, CurrentGameState.GetWeaponResource(), CurrentGameState.GetPeasants());
 
         if (result == true)
         {
@@ -243,44 +88,28 @@ public class ResourceManagementCore : MonoBehaviour
         }
     }
 
-    private void GoToLose()
-    {
-        SceneManager.LoadScene(_loseSceneIndex);
-    }
-
-    private void GoToWin()
-    {
-        SceneManager.LoadScene(_winSceneIndex);
-    }
-
     public void Initialise()
     {
-        if (DisplayManager == null)
+        if (CurrentGameState == null)
         {
-            throw new InvalidOperationException("Public Fields for Resouce Management Core is invalid. Wire it up fool.");
+            CurrentGameState = new GameState(_nPeasantsOnStartup, _affinityChancePercent, _statBoostMax);
         }
 
         Random.InitState(Guid.NewGuid().GetHashCode()); // pretty much guarantees uniqueness between gameruns
 
-        if (King == null) { King = new KingData(); }   
-        if (Dragon == null) { Dragon = new DragonData(); }   
-        if (ResourceState == null) {
-
-            var peasants = GeneratePeasants(_nPeasantsOnStartup);
-            ResourceState = new GameResourceState(peasants:peasants);
-        }
+        
     }
 
     public int GetNumberOfPeastantsAt(ResourceLocation location)
     {
-        var peasants = ResourceState.Peasants;
+        var peasants = CurrentGameState.ResourceState.Peasants;
 
         return peasants.Count(p => p.CurrentLocation == location);
     }
 
     public IEnumerable<Peasant> GetPeasantsAt(ResourceLocation location)
     {
-        var peasants = ResourceState.Peasants;
+        var peasants = CurrentGameState.ResourceState.Peasants;
 
         return peasants.Where(p => p.CurrentLocation == location);
     }
@@ -302,9 +131,106 @@ public class ResourceManagementCore : MonoBehaviour
 
     #endregion
 
-    #endregion  
 
     #region ImplementationDetail
+
+    private void GoToLose()
+    {
+        SceneManager.LoadScene(_loseSceneIndex);
+    }
+
+    private void GoToWin()
+    {
+        SceneManager.LoadScene(_winSceneIndex);
+    }
+
+    private void LetTheDragonLoose(GameState gameState)
+    {
+        var currentResourceState = gameState.ResourceState;
+        var dragon = gameState.Dragon;
+        var king = gameState.King;
+
+        int dailyAppetite = dragon.DailyAppetitite;
+        int nPeasantsInPen = GetNumberOfPeastantsAt(ResourceLocation.SacrificialPen);
+
+        EatHumans(GetPeasantsAt(ResourceLocation.SacrificialPen));
+
+        if (dailyAppetite > nPeasantsInPen)
+        {
+            AttackRandomLocation();
+        }
+    }
+
+    private void AttackRandomLocation()
+    {
+        var randomLocation = SelectRandomLocation();
+
+        var peastantsToDie = GetPeasantsAt(randomLocation);
+
+        foreach (var peasant in peastantsToDie)
+        {
+            peasant.Die();
+        }
+
+    }
+
+    private ResourceLocation SelectRandomLocation()
+    {
+        int nLocation = Enum.GetNames(typeof(ResourceLocation)).Length;
+        int randommIndex = (int)Random.Range(0.0f, nLocation);
+        return (ResourceLocation)randommIndex;
+    }
+
+    private bool RandomChance(float chance)
+    {
+        var comparer = Random.Range(0.0f, 100.0f);
+
+        return (comparer <= chance);
+    }
+
+    private void EatHumans(IEnumerable<Peasant> peasants)
+    {
+        var allPeasants = CurrentGameState.GetPeasants().ToList();
+
+        foreach (var peasant in peasants)
+        {
+            allPeasants.Remove(peasant);
+            //peasant.Die();
+        }
+
+        CurrentGameState.ResourceState.UpdatePeastants(allPeasants);
+    }
+
+    private void GenerateResources(GameState currentState)
+    {
+        // Weapon
+        var nPeasantsAtWeapon = GetNumberOfPeastantsAt(ResourceLocation.BlackSmiths);
+        GenerateWeapons(currentState.GetWoodResource(), currentState.GetIronResource(), nPeasantsAtWeapon);
+
+        // Food
+        var nPeasantsAtFarm = GetNumberOfPeastantsAt(ResourceLocation.Farm);
+        currentState.AddFoodResource(nPeasantsAtFarm);
+
+        // Iron
+        var nPeasantsAtMine = GetNumberOfPeastantsAt(ResourceLocation.Mine);
+        currentState.AddIronResource(nPeasantsAtMine);
+
+        // Wood
+        var nPeasantsAtForrest = GetNumberOfPeastantsAt(ResourceLocation.Forrest);
+        currentState.AddWoodResource(nPeasantsAtForrest);
+
+    }
+
+    private void GenerateWeapons(int nWood, int nIron, int nPeasants)
+    {
+        Debug.Log("Creating weapons with wood: " + nWood + " iron: " + nIron + " peasants: " + nPeasants);
+        var nWeaponsToCreate = new int[] { nWood, nIron, nPeasants }.Min();
+        Debug.Log("Making " + nWeaponsToCreate + " weapons.");
+
+        CurrentGameState.SubtractWoodResource(nWeaponsToCreate);
+        CurrentGameState.SubtractIronResource(nWeaponsToCreate);
+        CurrentGameState.AddWeaponResource(nWeaponsToCreate);
+    }
 
     private int CalculateTotalForce(int nWeapons, IEnumerable<Peasant> fighters)
     {
@@ -322,133 +248,7 @@ public class ResourceManagementCore : MonoBehaviour
 
         return result;
     }
-
-    private IEnumerable<Peasant> GeneratePeasants(int nPeasants)
-    {
-        var peasants = new List<Peasant>();
-
-        int count = 0;
-
-        while (count < nPeasants)
-        {
-            int level = 0;
-            var location = ResourceLocation.CrowdPit;
-            float statBoost = GenerateRandomStatBoost();
-            var affinity = AssignRandomAffinity();
-            bool transit = false;
-
-            peasants.Add(
-                new Peasant(
-                    level: level,
-                    location: location,
-                    statBoostBonus: statBoost,
-                    resourceAffinity: affinity,
-                    inTransit: transit
-                ));
-
-            count++;
-        }
-
-        return peasants;
-    }
-
-    private List<MaterialResourceType> AssignRandomAffinity()
-    {
-        var result = new List<MaterialResourceType>();
-
-        if (RandomChance(_affinityChancePercent))
-        {
-            result.Add(SelectRandomRersource());                
-        }
-
-        return result;
-
-    }
-
-    private MaterialResourceType SelectRandomRersource()
-    {
-        int nResourceTypes = Enum.GetNames(typeof(MaterialResourceType)).Length;
-        int randommIndex = (int)Random.Range(0.0f, nResourceTypes);
-        return (MaterialResourceType)randommIndex;
-    }
-
-    private ResourceLocation SelectRandomLocation()
-    {
-        int nLocation = Enum.GetNames(typeof(ResourceLocation)).Length;
-        int randommIndex = (int)Random.Range(0.0f, nLocation);
-        return (ResourceLocation)randommIndex;
-    }
-
-    private bool RandomChance(float chance)
-    {
-        var comparer = Random.Range(0.0f, 100.0f);
-
-        return (comparer <= chance);
-    }
-
-    private float GenerateRandomStatBoost()
-    {
-        return Random.Range(0.0f, _statBoostMax);
-    }
-
-    private void AddMaterialResource(MaterialResourceType gameResource, int incrementValue)
-    {
-        if (incrementValue <= 0)
-            return;
-
-        switch (gameResource)
-        {
-            case MaterialResourceType.Wood:
-                ResourceState.nWoodResources += incrementValue;
-                break;
-            case MaterialResourceType.Iron:
-                ResourceState.nIronResources += incrementValue;
-                break;
-            case MaterialResourceType.Food:
-                ResourceState.nFoodResources += incrementValue;
-                break;
-            case MaterialResourceType.Weapon:
-                ResourceState.nWeaponResources += incrementValue;
-                break;
-
-            default:
-                throw new ArgumentException("Unknown resource passed in to add");
-        }
-
-    }
-
-    private void SubtractMaterialResource(MaterialResourceType gameResource, int decrementValue)
-    {
-        if (decrementValue <= 0) return;
-
-        int newValue = 0;
-        switch (gameResource)
-        {
-            case MaterialResourceType.Wood:
-                newValue = ResourceState.nWoodResources - decrementValue;
-                ResourceState.nWoodResources = Math.Max(0, newValue);
-                break;
-
-            case MaterialResourceType.Iron:
-                newValue = ResourceState.nIronResources - decrementValue;
-                ResourceState.nIronResources = Math.Max(0, newValue);
-                break;
-
-            case MaterialResourceType.Food:
-                newValue = ResourceState.nFoodResources - decrementValue;
-                ResourceState.nFoodResources = Math.Max(0, newValue);
-                break;
-
-            case MaterialResourceType.Weapon:
-                newValue = ResourceState.nWeaponResources - decrementValue;
-                ResourceState.nWeaponResources = Math.Max(0, newValue);
-                break;
-
-            default:
-                throw new ArgumentException("Unknown resource passed in to add");
-                
-        }
-    }
+    
 
     #endregion
 
