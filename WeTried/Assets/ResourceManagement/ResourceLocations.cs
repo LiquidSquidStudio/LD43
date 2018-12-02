@@ -6,6 +6,6 @@
     Farm = 3,
     BlackSmiths = 4,
     SacrificialPen = 5,
-    Forrest = 6,
+    Forest = 6,
     Lake = 7
 }

@@ -91,6 +91,11 @@ public class GameState
         return ResourceState.nWeaponResources;
     }
 
+    public IEnumerable<Peasant> GetPeasantsAt(ResourceLocation location)
+    {
+        return ResourceState.Peasants.Where(p => p.CurrentLocation == location);
+    }
+
     public IEnumerable<Peasant> GetPeasants()
     {
         return ResourceState.Peasants;

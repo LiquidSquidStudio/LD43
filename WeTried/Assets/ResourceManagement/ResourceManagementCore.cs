@@ -216,7 +216,7 @@ public class ResourceManagementCore : MonoBehaviour
         currentState.AddIronResource(nPeasantsAtMine);
 
         // Wood
-        var nPeasantsAtForrest = GetNumberOfPeastantsAt(ResourceLocation.Forrest);
+        var nPeasantsAtForrest = GetNumberOfPeastantsAt(ResourceLocation.Forest);
         currentState.AddWoodResource(nPeasantsAtForrest);
 
     }
