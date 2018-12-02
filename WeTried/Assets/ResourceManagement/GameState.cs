@@ -10,6 +10,9 @@ public class GameState
     public DragonData Dragon { get; private set; }
     public GameResourceState ResourceState { get; private set; }
     public int CurrentDay { get; private set; }
+    //public BlackSmiths BlackSmiths { get; private set; }
+    //public Forest Forest { get; private set; }
+    //public Farm Farm { get; private set; }
 
     #region Constructor
     public GameState(int nPeasants, float affinityPercent, float statBoostMax)

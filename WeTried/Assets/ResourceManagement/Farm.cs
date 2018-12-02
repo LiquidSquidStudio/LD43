@@ -1,0 +1,3 @@
+﻿public class Farm : Building
+{
+}
