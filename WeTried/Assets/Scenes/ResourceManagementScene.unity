@@ -1219,7 +1219,7 @@ MonoBehaviour:
   _statBoostMax: 5
   _affinityChancePercent: 10
   _moveSpeed: 1
-  _reachedLocationRadius: 5
+  _reachedLocationRadius: 0.2
   CrowdPit: {fileID: 1934169220}
   Mine: {fileID: 266963784}
   Farm: {fileID: 809676928}
@@ -10065,7 +10065,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1934169219}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.38, y: -0.52, z: 0}
+  m_LocalPosition: {x: -5.38, y: -0.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 172506075}
