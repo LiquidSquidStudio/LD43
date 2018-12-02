@@ -10,7 +10,7 @@ public class CrowdController : MonoBehaviour {
 
     // Using this class to control the motion, selection and passing on of peasants on from the crowd to the peasant manager
 
-    public ResourceManagementCore rmc;
+    public ResourceManagementCore ResourceCore;
     [Space]
     [Range(0, 200)]
     public int nPeasants = 100;
@@ -64,21 +64,12 @@ public class CrowdController : MonoBehaviour {
 
     private void OnEnable()
     {
-        foreach (var building in ClickableBuildings)
-        {
-            building.MoveFromBuildingEvent.AddListener(ShowNumberOfPeasantsPanel);
-            building.MoveToBuildingEvent.AddListener(MovePeasants);
-        }
+        SubscribeToEvents();
     }
 
     private void OnDisable()
     {
-
-        foreach (var building in ClickableBuildings)
-        {
-            building.MoveFromBuildingEvent.RemoveListener(ShowNumberOfPeasantsPanel);
-            building.MoveToBuildingEvent.RemoveListener(MovePeasants);
-        }
+        UnsubscribeFromEvents();
 
     }
 
@@ -87,7 +78,7 @@ public class CrowdController : MonoBehaviour {
 
         var spawnedPeasants = SpawnNPeasants(nPeasants);
         peasants = spawnedPeasants;
-        rmc.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
+        ResourceCore.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
 
         // TODO: Codesmell. This class shouldn't be worried about UI
         CrowdSlider.onValueChanged.AddListener(delegate { NumberOfPeasantsChanged(); });
@@ -155,7 +146,7 @@ public class CrowdController : MonoBehaviour {
     {
         // get peasants from origin
         int nPeasantsToMove = (int)CrowdSlider.value;
-        var peasants = rmc.GetPeasantsAt(_origin);
+        var peasants = ResourceCore.GetPeasantsAt(_origin);
 
         var peasantsToMove = peasants.Take(nPeasantsToMove);
 
@@ -173,7 +164,7 @@ public class CrowdController : MonoBehaviour {
     {
         // get nubmer of peasants at origin
         _origin = origin;
-        var nPeasants = rmc.GetNumberOfPeastantsAt(_origin);
+        var nPeasants = ResourceCore.GetNumberOfPeastantsAt(_origin);
 
         // update UI
         NPeasantPanel.SetActive(true);
@@ -195,9 +186,47 @@ public class CrowdController : MonoBehaviour {
 
     }
 
+    public void MoveAllPeasantsTo(ResourceLocation location)
+    {
+        var peasants = ResourceCore.CurrentGameState.GetPeasants();
+
+        foreach (var peasant in peasants)
+        {
+            peasant.CurrentLocation = location;
+            peasant.transform.position = GetPosition(location);
+        }
+    }
+
     #endregion
 
     #region Helpers
+
+    private void SubscribeToEvents()
+    {
+        ResourceCore.NewDayEvent.AddListener(OnNewDay);
+
+        foreach (var building in ClickableBuildings)
+        {
+            building.MoveFromBuildingEvent.AddListener(ShowNumberOfPeasantsPanel);
+            building.MoveToBuildingEvent.AddListener(MovePeasants);
+        }
+    }
+
+    private void OnNewDay()
+    {
+        MoveAllPeasantsTo(ResourceLocation.CrowdPit);
+    }
+
+    private void UnsubscribeFromEvents()
+    {
+        ResourceCore.NewDayEvent.RemoveListener(OnNewDay);
+
+        foreach (var building in ClickableBuildings)
+        {
+            building.MoveFromBuildingEvent.RemoveListener(ShowNumberOfPeasantsPanel);
+            building.MoveToBuildingEvent.RemoveListener(MovePeasants);
+        }
+    }
 
     private List<MaterialResourceType> AssignRandomAffinity(float affinityPercent)
     {
