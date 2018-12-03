@@ -110,7 +110,14 @@ public class GameState
 
     public int GetNumberOfPeasantsAt(ResourceLocation location)
     {
-        return ResourceState.Peasants.Where(p => p.CurrentLocation == location).Count();
+        return ResourceState.Peasants.Where(p => (p.CurrentLocation == location) && (p.IsInTrasit == false)).Count();
+    }
+
+    public void IncrementDay(int value)
+    {
+        if (value <= 0) return;
+
+        CurrentDay += value;
     }
 
     #endregion

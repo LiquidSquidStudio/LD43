@@ -1192,7 +1192,7 @@ Transform:
   - {fileID: 2014900618}
   - {fileID: 1207275807}
   m_Father: {fileID: 1842268302}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &172506076
 MonoBehaviour:
@@ -1207,6 +1207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ResourceCore: {fileID: 2119484704}
+  UIManager: {fileID: 1636133022}
   nPeasants: 100
   peasantPrefab: {fileID: 1815504423879282, guid: 96c654007dd6743489a2ed4d124addb9,
     type: 2}
@@ -1473,11 +1474,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingType: 3
   MoveToBuildingEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
@@ -3382,58 +3378,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 556525287}
   m_CullTransparentMesh: 0
---- !u!1 &566410714
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1677457428909430, guid: 2a8a530693e599d4fb581191564f5da8,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 566410715}
-  - component: {fileID: 566410716}
-  m_Layer: 0
-  m_Name: PeasantController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &566410715
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4798070207595648, guid: 2a8a530693e599d4fb581191564f5da8,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 566410714}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1842268302}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &566410716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114867324750773296, guid: 2a8a530693e599d4fb581191564f5da8,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 566410714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0888a67493d650945abb911277434d95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buildings:
-  - {fileID: 1925193788}
-  - {fileID: 1351779437}
-  - {fileID: 218517632}
-  - {fileID: 2096146082}
-  - {fileID: 1188128045}
-  peasantPrefab: {fileID: 1815504423879282, guid: 96c654007dd6743489a2ed4d124addb9,
-    type: 2}
-  targetLocIndex: 0
 --- !u!1 &572368713
 GameObject:
   m_ObjectHideFlags: 0
@@ -3647,11 +3591,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingType: 0
   MoveToBuildingEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
@@ -4453,7 +4392,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5942,11 +5881,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  MoveFromBuildingEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   FirstSlectImage: {fileID: 2120409400}
   SecondSelectImage: {fileID: 17111668}
   CanBeOrigin: 1
@@ -6694,7 +6628,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7101,11 +7035,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingType: 2
   MoveToBuildingEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
@@ -8423,7 +8352,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 68d314c4e841b824aa82454be6a38229, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -9251,7 +9180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1760106432
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9583,7 +9512,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 566410715}
   - {fileID: 172506075}
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -9971,11 +9899,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  MoveFromBuildingEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
   FirstSlectImage: {fileID: 1856080624}
   SecondSelectImage: {fileID: 1195545740}
   CanBeOrigin: 0
@@ -10171,7 +10094,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Forrest
+  m_Text: Forest
 --- !u!222 &1967319640
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11088,11 +11011,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingType: 4
   MoveToBuildingEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  MoveFromBuildingEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: BuildingUIEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,

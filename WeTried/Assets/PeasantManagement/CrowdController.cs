@@ -11,6 +11,7 @@ public class CrowdController : MonoBehaviour {
     // Using this class to control the motion, selection and passing on of peasants on from the crowd to the peasant manager
 
     public ResourceManagementCore ResourceCore;
+    public ResourceManagementUIManager UIManager;
     [Space]
     [Range(0, 200)]
     public int nPeasants = 100;
@@ -56,7 +57,6 @@ public class CrowdController : MonoBehaviour {
     public ClickableBuildingController[] ClickableBuildings;
 
     private int _nPeasantsToMove = 1;
-    private ResourceLocation _origin = ResourceLocation.CrowdPit;
 
     private void Awake()
     {
@@ -83,6 +83,8 @@ public class CrowdController : MonoBehaviour {
 
         // TODO: Codesmell. This class shouldn't be worried about UI
         CrowdSlider.onValueChanged.AddListener(delegate { NumberOfPeasantsChanged(); });
+
+        UpdatePeasantNumberPanel();
     }
 
     #region Implementation
@@ -105,6 +107,7 @@ public class CrowdController : MonoBehaviour {
         p.IsInTrasit = transit;
         p.MoveSpeed = _moveSpeed;
         p.ReachedLocationRadius = _reachedLocationRadius;
+        p.Controller = this;
 
         return p;
     }
@@ -147,7 +150,7 @@ public class CrowdController : MonoBehaviour {
     {
         // get peasants from origin
         int nPeasantsToMove = (int)CrowdSlider.value;
-        var peasants = ResourceCore.GetPeasantsAt(_origin);
+        var peasants = ResourceCore.GetPeasantsAt(ResourceLocation.CrowdPit);
 
         var peasantsToMove = peasants.Where(p => p.IsInTrasit == false).Take(nPeasantsToMove);
 
@@ -159,24 +162,22 @@ public class CrowdController : MonoBehaviour {
         }
 
         // Update UI
-        NPeasantPanel.SetActive(false);
+        UpdatePeasantNumberPanel();
+        UIManager.UpdateUI();
     }
 
-    public void ShowNumberOfPeasantsPanel(ResourceLocation origin)
+    public void UpdatePeasantNumberPanel()
     {
         // get nubmer of peasants at origin
-        _origin = origin;
-        int nPeasants = ResourceCore.GetPeasantsAt(_origin).Where(p => p.IsInTrasit == false).Count();
+        int nPeasants = ResourceCore.GetPeasantsAt(ResourceLocation.CrowdPit).Count();
 
         // update UI
-        NPeasantPanel.SetActive(true);
         CrowdSlider.maxValue = nPeasants;
         CrowdSlider.value = 1;
         CrowdSlider.minValue = 1;
 
         MaxValueLabel.text = nPeasants.ToString();
         CurrentValueLabel.text = 1.ToString();
-
     }
 
     public void NumberOfPeasantsChanged()
@@ -195,8 +196,14 @@ public class CrowdController : MonoBehaviour {
         foreach (var peasant in peasants)
         {
             peasant.CurrentLocation = location;
+            peasant.IsInTrasit = false;
             peasant.transform.position = NoisyTransformPosition(GetPosition(location), CrowdSizeScale);
         }
+    }
+
+    public void OnPeasantReachedDestination(ResourceLocation location)
+    {
+        UIManager.UpdateUI();
     }
 
     #endregion
@@ -209,7 +216,6 @@ public class CrowdController : MonoBehaviour {
 
         foreach (var building in ClickableBuildings)
         {
-            building.MoveFromBuildingEvent.AddListener(ShowNumberOfPeasantsPanel);
             building.MoveToBuildingEvent.AddListener(MovePeasants);
         }
     }
@@ -217,6 +223,7 @@ public class CrowdController : MonoBehaviour {
     private void OnNewDay()
     {
         MoveAllPeasantsTo(ResourceLocation.CrowdPit);
+        UpdatePeasantNumberPanel();
     }
 
     private void UnsubscribeFromEvents()
@@ -225,7 +232,6 @@ public class CrowdController : MonoBehaviour {
 
         foreach (var building in ClickableBuildings)
         {
-            building.MoveFromBuildingEvent.RemoveListener(ShowNumberOfPeasantsPanel);
             building.MoveToBuildingEvent.RemoveListener(MovePeasants);
         }
     }
@@ -236,14 +242,14 @@ public class CrowdController : MonoBehaviour {
 
         if (RandomChance(affinityPercent))
         {
-            result.Add(SelectRandomRersource());
+            result.Add(SelectRandomResource());
         }
 
         return result;
 
     }
 
-    private MaterialResourceType SelectRandomRersource()
+    private MaterialResourceType SelectRandomResource()
     {
         int nResourceTypes = Enum.GetNames(typeof(MaterialResourceType)).Length;
         int randommIndex = (int)Random.Range(0.0f, nResourceTypes);

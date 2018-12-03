@@ -70,12 +70,12 @@ public class ResourceManagementUIManager : MonoBehaviour
 
         var peasants = grs.ResourceState.Peasants;
         MinePeasants.text = grs.GetNumberOfPeasantsAt(ResourceLocation.Mine).ToString();
-        FarmPeasants.text = grs.GetPeasantsAt(ResourceLocation.Farm).ToString();
-        BlackSmithPeasants.text =   grs.GetNumberOfPeasantsAt(ResourceLocation.BlackSmiths).ToString();
-        CrowdPeasants.text =        grs.GetNumberOfPeasantsAt(ResourceLocation.CrowdPit).ToString();
-        SacrificePesants.text =     grs.GetNumberOfPeasantsAt(ResourceLocation.SacrificialPen).ToString();
-        LakePeasants.text =         grs.GetNumberOfPeasantsAt(ResourceLocation.Lake).ToString();
-        ForestPeasants.text =       grs.GetNumberOfPeasantsAt(ResourceLocation.Forest).ToString();
+        FarmPeasants.text = grs.GetNumberOfPeasantsAt(ResourceLocation.Farm).ToString();
+        BlackSmithPeasants.text = grs.GetNumberOfPeasantsAt(ResourceLocation.BlackSmiths).ToString();
+        CrowdPeasants.text = grs.GetNumberOfPeasantsAt(ResourceLocation.CrowdPit).ToString();
+        SacrificePesants.text = grs.GetNumberOfPeasantsAt(ResourceLocation.SacrificialPen).ToString();
+        LakePeasants.text = grs.GetNumberOfPeasantsAt(ResourceLocation.Lake).ToString();
+        ForestPeasants.text = grs.GetNumberOfPeasantsAt(ResourceLocation.Forest).ToString();
     }
 
     #endregion

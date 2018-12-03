@@ -18,8 +18,6 @@ public class ResourceManagementCore : MonoBehaviour
     public CoreEvent NewDayEvent;
     public CoreEvent DayEndEvent;
 
-
-    public int CurrentDay { get; private set; }
     #endregion
 
     //#region Public Fields
@@ -74,7 +72,7 @@ public class ResourceManagementCore : MonoBehaviour
     public void OnDayEnd()
     {
         if (DayEndEvent != null) DayEndEvent.Invoke();
-        CurrentDay++;
+        CurrentGameState.IncrementDay(1);
         Debug.Log("End of the day Detected!");
         DayEnd(CurrentGameState);
 
@@ -113,14 +111,14 @@ public class ResourceManagementCore : MonoBehaviour
     {
         var peasants = CurrentGameState.ResourceState.Peasants;
 
-        return peasants.Count(p => p.CurrentLocation == location);
+        return peasants.Count(p => (p.CurrentLocation == location) && (p.IsInTrasit == false));
     }
 
     public IEnumerable<Peasant> GetPeasantsAt(ResourceLocation location)
     {
         var peasants = CurrentGameState.ResourceState.Peasants;
 
-        return peasants.Where(p => p.CurrentLocation == location);
+        return peasants.Where(p => (p.CurrentLocation == location) && (p.IsInTrasit == false));
     }
 
     /// <summary>
@@ -136,6 +134,13 @@ public class ResourceManagementCore : MonoBehaviour
         bool result = totalFightingForce >= dragon.FightingStrength;
 
         return result;
+    }
+
+    public void RemovePeasant(Peasant peasant)
+    {
+        var peasants = CurrentGameState.GetPeasants().ToList();
+        peasants.Remove(peasant);
+        CurrentGameState.ResourceState.UpdatePeastants(peasants);
     }
 
     #endregion
@@ -155,9 +160,7 @@ public class ResourceManagementCore : MonoBehaviour
 
     private void LetTheDragonLoose(GameState gameState)
     {
-        var currentResourceState = gameState.ResourceState;
         var dragon = gameState.Dragon;
-        var king = gameState.King;
 
         int dailyAppetite = dragon.DailyAppetitite;
         int nPeasantsInPen = GetNumberOfPeastantsAt(ResourceLocation.SacrificialPen);
@@ -204,7 +207,7 @@ public class ResourceManagementCore : MonoBehaviour
         foreach (var peasant in peasants)
         {
             allPeasants.Remove(peasant);
-            //peasant.Die();
+            peasant.Die();
         }
 
         CurrentGameState.ResourceState.UpdatePeastants(allPeasants);

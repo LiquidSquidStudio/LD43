@@ -14,11 +14,9 @@ public class Peasant : MonoBehaviour
     public float StatBoostBonus { get; set; }
     public IEnumerable<MaterialResourceType> ResourceAffinity { get; set; }
     public bool IsInTrasit { get; set; }
-
-    //public PeasantEvent creation;
-
     public float MoveSpeed = 20;
     public float ReachedLocationRadius = 5;
+    public CrowdController Controller { get; set; }
 
     float distance;
     Vector3 _target;
@@ -64,7 +62,9 @@ public class Peasant : MonoBehaviour
 
     public void Die()
     {
-        Destroy(this.transform.gameObject);
+        Debug.Log("I died.");
+        Controller.ResourceCore.RemovePeasant(this);
+        Destroy(gameObject);
     }
 
     public void StartMoving(ResourceLocation destination, Vector3 tar)
@@ -97,7 +97,7 @@ public class Peasant : MonoBehaviour
     {
         CurrentLocation = _currentDestination;
         IsInTrasit = false;
-        Debug.Log("peasant has reached the building");
+        Controller.OnPeasantReachedDestination(CurrentLocation);
     }
 
     #endregion
