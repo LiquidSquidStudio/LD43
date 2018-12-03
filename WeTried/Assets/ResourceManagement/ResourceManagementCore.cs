@@ -20,26 +20,7 @@ public class ResourceManagementCore : MonoBehaviour
 
     #endregion
 
-    //#region Public Fields
-    //[Header("Dependencies To be wired up")]
-    //public ResourceManagementTestUIManager DisplayManager;
-    //#endregion
-
     #region PrivateFields
-    //[SerializeField]
-    //[Tooltip("Number of peasants on game start")]
-    //private int _nPeasantsOnStartup = 5;
-
-    //[SerializeField]
-    //[Tooltip("Stat boost multiplier")]
-    //private float _statBoostMax = 5;
-
-    //[SerializeField]
-    //[Tooltip("Percentage chance of gaining a random affinity")]
-    //[Range(0.0f, 100.0f)]
-    //private float _affinityChancePercent = 10.0f;
-
-
     private int _winSceneIndex = 1;
     private int _loseSceneIndex = 2;
 
@@ -48,41 +29,59 @@ public class ResourceManagementCore : MonoBehaviour
     #region Unity lifecycles
     public void Awake()
     {
-        //Debug.Log("Resource management core Awake");
         Initialise();
     }
     public void Start()
     {
-        //Debug.Log("Resource management core Start");
     }
     #endregion
 
     #region Implementation
-
-
-    public void DayEnd(GameState gameState)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="gameState"></param>
+    /// <returns>Game end</returns>
+    public bool DayEnd(GameState gameState)
     {
+        bool result = false;
+
         // Generate resources
         GenerateResources(gameState);
 
         // Let the Dragon purrr
         LetTheDragonLoose(gameState);
+
+        if (CurrentGameState.GetNumberOfPeasants() < 1)
+        {
+            result = true;
+        }
+
+        return result;
     }
 
     public void OnDayEnd()
     {
-        if (DayEndEvent != null) DayEndEvent.Invoke();
-        CurrentGameState.IncrementDay(1);
         Debug.Log("End of the day Detected!");
-        DayEnd(CurrentGameState);
+        if (DayEndEvent != null) DayEndEvent.Invoke();
+
+        CurrentGameState.IncrementDay(1);
+        bool gameEnd = DayEnd(CurrentGameState);
 
         //DisplayManager.UpdateUI(ResourceState, _currentDay);
 
-        if (UpdateUIEvent != null) UpdateUIEvent.Invoke();
+        if (gameEnd)
+        {
+            GoToLose();
+            return;
+        } 
+
         if (NewDayEvent != null) NewDayEvent.Invoke();
+        if (UpdateUIEvent != null) UpdateUIEvent.Invoke();
 
         if (PersistingData.storyProgression <= 3)
         {
+            Debug.Log("Progressing story");
             PersistingData.gs = CurrentGameState;
             SceneManager.LoadScene(3);
         }
@@ -95,9 +94,9 @@ public class ResourceManagementCore : MonoBehaviour
         if (result == true)
         {
             GoToWin();
-        } else {
-            GoToLose();
         }
+
+        OnDayEnd();
     }
 
     public void Initialise()
@@ -266,6 +265,5 @@ public class ResourceManagementCore : MonoBehaviour
         return result;
     }
     
-
     #endregion
 }
