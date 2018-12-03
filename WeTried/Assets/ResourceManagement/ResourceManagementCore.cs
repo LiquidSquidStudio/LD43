@@ -140,7 +140,6 @@ public class ResourceManagementCore : MonoBehaviour
 
     #endregion
 
-
     #region ImplementationDetail
 
     private void GoToLose()
@@ -260,5 +259,4 @@ public class ResourceManagementCore : MonoBehaviour
     
 
     #endregion
-
 }

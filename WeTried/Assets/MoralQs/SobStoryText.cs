@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SobStoryText : MonoBehaviour {
-
+public class SobStoryText : MonoBehaviour
+{
     public Button[] buttons;
     public SobStory[] sobStories;
     public Text ssText;
@@ -20,8 +20,8 @@ public class SobStoryText : MonoBehaviour {
 
     void Start()
     {
-        if (buttons != null) 
-            EnableDisableNameButtons(true,false);
+        if (buttons != null)
+            EnableDisableNameButtons(true, false);
 
         if (nextButton != null)
             nextButton.gameObject.SetActive(false);
@@ -40,7 +40,7 @@ public class SobStoryText : MonoBehaviour {
         var ss = GetSobStory(activeSSIndex1);
         ssText.text = ss.StoryTellerName + ": " + ss.SobStoryText;
 
-        nextButton.gameObject.SetActive(true);
+        InitializeNextButton(false);
     }
 
     void PresentSecondSobstory()
@@ -48,23 +48,35 @@ public class SobStoryText : MonoBehaviour {
         var ss = GetSobStory(activeSSIndex2);
         ssText.text = ss.StoryTellerName + ": " + ss.SobStoryText;
 
-        nextButton.gameObject.SetActive(true);
+        InitializeNextButton(true);
     }
 
     void PresentChoices(int ss1, int ss2)
     {
         InitializeNameButtons(ss1, ss2);
+        nextButton.gameObject.SetActive(false);
+
+        ssText.text = "Who do will you Sacrifice?";
     }
 
-    void InitializeNextButton()
+    void IncrementSS()
+    {
+        currentSSIndex++;
+    }
+
+    void InitializeNextButton(bool isSecond)
     {
         nextButton.gameObject.SetActive(true);
         nextButton.enabled = true;
 
-        if (currentSSIndex % 2 == 0)
+        nextButton.GetComponentInChildren<Text>().text = "Next";
+
+        if (!isSecond)
             nextButton.onClick.AddListener(() => PresentSecondSobstory());
         else
             nextButton.onClick.AddListener(() => PresentChoices(activeSSIndex1, activeSSIndex2));
+
+        nextButton.onClick.AddListener(() => IncrementSS());
     }
 
     void InitializeNameButtons(int ssIndex1, int ssIndex2)
@@ -104,7 +116,7 @@ public class SobStoryText : MonoBehaviour {
 
     IEnumerator MoveToNextDayAfterDelay()
     {
-        EnableDisableNameButtons(false,true);
+        EnableDisableNameButtons(false, true);
         yield return new WaitForSeconds(waitTime);
 
         SceneManager.LoadScene(sceneIndex);
