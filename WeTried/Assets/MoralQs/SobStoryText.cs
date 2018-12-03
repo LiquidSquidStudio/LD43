@@ -1,43 +1,48 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SobStoryText : MonoBehaviour
 {
-    public Button[] buttons;
-    public SobStory[] sobStories;
     public Text ssText;
+    //public Text scrollingText; For the future
+    public Button[] buttons;
     public Button nextButton;
 
     [Range(0, 10)]
     public float waitTime;
-    int currentSSIndex;
-    int activeSSIndex1 = 0;
-    int activeSSIndex2 = 1;
+
+    SobStoryContainer ssc;
+    int activeSSIndex = 0;
+
     int sceneIndex = 0;
 
-    void Start()
+    private void Awake()
     {
+        ssc = GetComponent<SobStoryContainer>();
         if (buttons != null)
             EnableDisableNameButtons(true, false);
 
         if (nextButton != null)
             nextButton.gameObject.SetActive(false);
+    }
 
+    public void SetSSIndex(int sp)
+    {
+        activeSSIndex = sp * 2;
         PresentFirstSobstory();
     }
 
     public SobStory GetSobStory(int ssIndex)
     {
-        var sobStory = sobStories[ssIndex];
+        var sobStory = ssc.sobStories[ssIndex];
         return sobStory;
     }
 
-    void PresentFirstSobstory()
+    public void PresentFirstSobstory()
     {
-        var ss = GetSobStory(activeSSIndex1);
+        var ss = GetSobStory(activeSSIndex);
         ssText.text = ss.StoryTellerName + ": " + ss.SobStoryText;
 
         InitializeNextButton(false);
@@ -45,23 +50,18 @@ public class SobStoryText : MonoBehaviour
 
     void PresentSecondSobstory()
     {
-        var ss = GetSobStory(activeSSIndex2);
+        var ss = GetSobStory(activeSSIndex + 1);
         ssText.text = ss.StoryTellerName + ": " + ss.SobStoryText;
 
         InitializeNextButton(true);
     }
 
-    void PresentChoices(int ss1, int ss2)
+    void PresentChoices(int ss1)
     {
-        InitializeNameButtons(ss1, ss2);
+        InitializeNameButtons(ss1);
         nextButton.gameObject.SetActive(false);
 
         ssText.text = "Who do will you Sacrifice?";
-    }
-
-    void IncrementSS()
-    {
-        currentSSIndex++;
     }
 
     void InitializeNextButton(bool isSecond)
@@ -74,15 +74,13 @@ public class SobStoryText : MonoBehaviour
         if (!isSecond)
             nextButton.onClick.AddListener(() => PresentSecondSobstory());
         else
-            nextButton.onClick.AddListener(() => PresentChoices(activeSSIndex1, activeSSIndex2));
-
-        nextButton.onClick.AddListener(() => IncrementSS());
+            nextButton.onClick.AddListener(() => PresentChoices(activeSSIndex));
     }
 
-    void InitializeNameButtons(int ssIndex1, int ssIndex2)
+    void InitializeNameButtons(int ssIndex)
     {
-        buttons[0].GetComponentInChildren<Text>().text = sobStories[ssIndex1].StoryTellerName;
-        buttons[1].GetComponentInChildren<Text>().text = sobStories[ssIndex2].StoryTellerName;
+        buttons[0].GetComponentInChildren<Text>().text = ssc.sobStories[ssIndex].StoryTellerName;
+        buttons[1].GetComponentInChildren<Text>().text = ssc.sobStories[ssIndex + 1].StoryTellerName;
 
         EnableDisableNameButtons(true, true);
 
@@ -98,9 +96,9 @@ public class SobStoryText : MonoBehaviour
     void ShowResponse(int buttonIndex)
     {
         if (buttonIndex % 2 == 0)
-            ssText.text = sobStories[activeSSIndex1].Response;
+            ssText.text = ssc.sobStories[activeSSIndex].Response;
         else
-            ssText.text = sobStories[activeSSIndex2].Response;
+            ssText.text = ssc.sobStories[activeSSIndex + 1].Response;
 
         StartCoroutine(MoveToNextDayAfterDelay());
     }
@@ -118,15 +116,9 @@ public class SobStoryText : MonoBehaviour
     {
         EnableDisableNameButtons(false, true);
         yield return new WaitForSeconds(waitTime);
+        PersistingData.storyProgression++;
+        Debug.Log("story progression " + PersistingData.storyProgression);
 
         SceneManager.LoadScene(sceneIndex);
     }
-}
-
-[Serializable]
-public class SobStory
-{
-    public string StoryTellerName;
-    public string SobStoryText;
-    public string Response;
 }

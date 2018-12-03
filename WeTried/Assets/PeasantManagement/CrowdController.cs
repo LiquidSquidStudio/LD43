@@ -76,10 +76,19 @@ public class CrowdController : MonoBehaviour {
 
     private void Start()
     {
-
-        var spawnedPeasants = SpawnNPeasants(nPeasants);
-        peasants = spawnedPeasants;
-        ResourceCore.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
+        if (PersistingData.storyProgression == 0)
+        {
+            var spawnedPeasants = SpawnNPeasants(nPeasants);
+            peasants = spawnedPeasants;
+            ResourceCore.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
+        }
+        else
+        {
+            nPeasants = PersistingData.gs.GetNumberOfPeasants();
+            var spawnedPeasants = SpawnNPeasants(nPeasants);
+            peasants = spawnedPeasants;
+            ResourceCore.CurrentGameState.ResourceState.UpdatePeastants(spawnedPeasants);
+        }
 
         // TODO: Codesmell. This class shouldn't be worried about UI
         CrowdSlider.onValueChanged.AddListener(delegate { NumberOfPeasantsChanged(); });

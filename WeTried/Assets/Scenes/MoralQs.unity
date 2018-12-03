@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 257677109}
   - component: {fileID: 257677111}
   - component: {fileID: 257677110}
+  - component: {fileID: 257677112}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -257,7 +258,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -40, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &257677110
 MonoBehaviour:
@@ -271,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -279,19 +280,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 484a9624d893f0b45ba9407665e494db, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Next
 --- !u!222 &257677111
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -299,6 +300,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 257677108}
   m_CullTransparentMesh: 0
+--- !u!114 &257677112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 257677108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &417331011
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +416,7 @@ GameObject:
   - component: {fileID: 640150351}
   - component: {fileID: 640150350}
   m_Layer: 0
-  m_Name: Button
+  m_Name: PersonChoice1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,8 +438,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -159, y: 72}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -230, y: -140}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &640150350
 MonoBehaviour:
@@ -486,8 +501,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: c6dc451e796e51e47a2d99fe283cb69e, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -501,6 +516,101 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 640150348}
   m_CullTransparentMesh: 0
+--- !u!1 &686606662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 686606663}
+  - component: {fileID: 686606665}
+  - component: {fileID: 686606664}
+  m_Layer: 5
+  m_Name: PeepLoc2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &686606663
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 686606662}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 0.999985}
+  m_Children: []
+  m_Father: {fileID: 1133657068}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -50, y: -40}
+  m_SizeDelta: {x: 150, y: 150}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!111 &686606664
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 686606662}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!212 &686606665
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 686606662}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &689372842
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +623,7 @@ GameObject:
   - component: {fileID: 689372845}
   - component: {fileID: 689372844}
   m_Layer: 0
-  m_Name: Button (2)
+  m_Name: NextButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -535,8 +645,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 254, y: -17}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 228, y: -152}
+  m_SizeDelta: {x: 160, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &689372844
 MonoBehaviour:
@@ -598,8 +708,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: c6dc451e796e51e47a2d99fe283cb69e, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -701,6 +811,7 @@ GameObject:
   - component: {fileID: 1072852038}
   - component: {fileID: 1072852037}
   - component: {fileID: 1072852036}
+  - component: {fileID: 1072852040}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -779,15 +890,86 @@ RectTransform:
   - {fileID: 1236113232}
   - {fileID: 417331012}
   - {fileID: 1193879572}
-  - {fileID: 1362935168}
+  - {fileID: 1133657068}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1072852040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1072852035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a443f9186b9fe649af84277c7f453ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ssText: {fileID: 1193879573}
+  sChoice: {fileID: 1133657070}
+--- !u!1 &1133657067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1133657068}
+  - component: {fileID: 1133657070}
+  m_Layer: 5
+  m_Name: PeopleLocations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1133657068
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1133657067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1743995841}
+  - {fileID: 686606663}
+  m_Father: {fileID: 1072852039}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1133657070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1133657067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2996456493ba1ab44a3ee27e7e223528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  peopleToSacrifice:
+  - {fileID: 1970444702369498, guid: 53723eba5463e164080d88a65c65984c, type: 2}
+  - {fileID: 1278902978803044, guid: 61e497279fce3144aa525851f84e1aa8, type: 2}
+  - {fileID: 1364398280785436, guid: afd6be2c031764e4e9c1f4a1ceb73cc2, type: 2}
+  - {fileID: 1264398928462188, guid: 61487a1beba370c4f8a4c4f7dbad4cd9, type: 2}
+  - {fileID: 1018590068553634, guid: f2c090610dd96504bbef66258b3ed0f5, type: 2}
+  - {fileID: 1171146059635114, guid: 59c7ba72c08d20044ac130857a10c11d, type: 2}
+  - {fileID: 1112819633898482, guid: b4a051420ad05cc4184931dc272805cb, type: 2}
+  - {fileID: 1656987439650750, guid: bc1d024f76bba7c489197bc67443f0e2, type: 2}
+  choiceLoc1: {fileID: 1743995841}
+  choiceLoc2: {fileID: 686606663}
 --- !u!1 &1193879570
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,8 +978,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1193879572}
-  - component: {fileID: 1193879571}
   - component: {fileID: 1193879573}
+  - component: {fileID: 1193879571}
   m_Layer: 0
   m_Name: ButtonManager
   m_TagString: Untagged
@@ -811,27 +993,85 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1193879570}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c341f3544db1ac446ae6143715d37046, type: 3}
+  m_Script: {fileID: 11500000, guid: e4caca3a63289eb4d8a3b9061066f468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quesionTextElement: {fileID: 417331013}
-  buttons:
-  - {fileID: 640150350}
-  - {fileID: 2041408450}
-  quizEndCanvas: {fileID: 0}
-  questions:
-  - QuestionText: 
-    Answers:
-    - Does Mother Esobel Deserve to die?
-    - What about this old man?
-    Responses:
-    - So be it. The old gods don't seem to want to save us against the Wyrm anyway....
-      So why should we care for their faithful?!
-    - I... don't think I've actually seen him in the town before.... How did you get
-      in here!! When
-  waitTime: 0
+  sobStories:
+  - StoryTellerName: Mother Esobel
+    SobStoryText: "Your Highness, my name is Mother Esobel. For many years I have
+      looked after our church and it\u2019s orphanage.. I have spent my life serving
+      God. You were chosen by God to lead us - so I am therefore your most loyal and
+      humble servant. I beg of you, please spare my life - won\u2019t you please think
+      of the children! I will strip the Church bare to aid you and your fight against
+      this dreaded beast from Hell!"
+    Response: Mother Esobel kept her word and stripped the Church bare. With blistered
+      hands, she spent the whole night dragging out all of the wooden artifacts and
+      furniture from the Church. (+10 wood)
+  - StoryTellerName: Tedric
+    SobStoryText: '*Sniff* *sniff* I.... I.... don''t wanna diiiiiiiiiie!!! (The rest
+      of Tedric''s words are barely comprehensible between his sobbing and blubing)'
+    Response: "The next day, when you go down for breakfast, you find a long thin
+      object bundled up in a cloth on the table. \u201CA gift for you, sire\u201D
+      one of the guards informs. You unravel the cloth to reveal a beautiful sword,
+      with engravings of a ferocious battle against a dragon down the blade and a
+      proud king leading his people to victory. (+5 weapons) "
+  - StoryTellerName: Gilbert
+    SobStoryText: "Don\u2019t mean to bother you King ___, my name is Gilbert, please
+      hear my plea\u2026 After my family was slaughtered at the hands of Baron Diego,
+      I fled here and left behind all my possessions. At first it was tough, I was
+      alone and broke, but I have accepted that life now. I live off the land, collecting
+      wood for fire and scavenging for food. Until this beast appeared, I felt like
+      I had control over my life again. One day I want to return to my home land,
+      and avenge my family\u2019s demise. But now my fate is in your hands\u2026 please
+      let me continue to live so I can one day stop my fate befalling another family."
+    Response: You did not expect much from Gilbert, but to your surprise the next
+      morning you find the store rooms have been stocked up with extra wood and food.
+      Turns out Gilbert spent the night gathering some extra resources, as a way to
+      say thank you. (+10 food, +10 wood)
+  - StoryTellerName: Fane
+    SobStoryText: (Not this guy again....) "GHyuck! Hyuck!!! Who's the greatest king
+      in all the lands!!"
+    Response: "Now a jester really knows how to party! That night Fane holds the largest
+      party the kingdom has ever seen. While the party has lifted some spirits, the
+      peasants have also lifted some of the kingdoms food! However some of the peasants
+      were devouring more than just food\u2026 (-20 food, +5 peasants)"
+  - StoryTellerName: Brienus
+    SobStoryText: (An unearthly deep voice eminates through the room. Flat and devoid
+      of emotion. Seemingly coming from all sides but the small unassuming robed figure
+      before you) "You summoned me sire. How can the Guild of Iron Bargains be of
+      service to you today?"
+    Response: It turns out that before the new branch in the mines was constructed,
+      Brienus use to spend hours exploring down various tunnels collecting the most
+      beautiful rocks he could find and some of these rocks are filled with valuable
+      metals! (+10 metal)
+  - StoryTellerName: Bridget
+    SobStoryText: Are you my grandson??? Come closer deary! I can't quite hear you.
+      "Satisified to the flagon"... Not sure I follow you there sonny....
+    Response: 'From a dusty cupboard, Nanny Bridget takes out her grandmother''s recipe
+      card box and locates her award winning bread recipe. The next day, left on the
+      doorstep is a woven basket filled with a bakers dozen of loafs, still warm from
+      the oven. (+13 food) '
+  - StoryTellerName: ???
+    SobStoryText: (The old man stares intently at you, not saying a word. An aura
+      of loneliness lingers around him, and you feel your heart sink. You are aware
+      of a mute hermit that appeared 15 years ago who lives on the borders of your
+      kingdom - no one knows his name, nor where he was from. A minute passes and
+      the old man slowly closes his eyes, and leaves the room.)
+    Response: (initial) At day break, you head out of the castle for your morning
+      stroll. As you open the door you find the old man waiting outside holding a
+      single loaf. You reach out for the loaf and before you say thank you, he turns
+      around and walks away (+1 food)  (end game) Turns out BOY WAS A WIZARRRDDDDDDD
+      (+50 weapons)
+  - StoryTellerName: Yvonne
+    SobStoryText: (In waddles the most pregant woman that you have ever laid eyes
+      on. Fit to burst) "Sorry it took me so long to answer your summons sire. I came
+      as fast as I could, but you have to understand that it takes me a little longer
+      to get around these days"
+    Response: Screams were heard throughout the night in the Kingdom, as it turned
+      out Yvonne went into labour the moment she stepped out as a free woman! She
+      is now known as the Octomum, with 8 bouncing baby boys. (+8 peasants)
 --- !u!4 &1193879572
 Transform:
   m_ObjectHideFlags: 0
@@ -859,19 +1099,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 600ad69eb29d6064ba5a89440d82f989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ssText: {fileID: 1236113233}
   buttons:
   - {fileID: 640150350}
   - {fileID: 2041408450}
-  sobStories:
-  - StoryTellerName: Esobel
-    SobStoryText: Religion
-    Response: +1 Faith
-  - StoryTellerName: ???
-    SobStoryText: Stares at you
-    Response: + 1 creepy Old man
-  ssText: {fileID: 1236113233}
   nextButton: {fileID: 689372844}
-  waitTime: 2
+  waitTime: 4
 --- !u!1 &1236113231
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,7 +1140,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 150}
-  m_SizeDelta: {x: 550, y: 120}
+  m_SizeDelta: {x: 600, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1236113233
 MonoBehaviour:
@@ -978,87 +1211,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!1 &1265690572
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1265690573}
-  m_Layer: 5
-  m_Name: PeepLoc2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1265690573
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1265690572}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.999985, y: 0.999985, z: 0.999985}
-  m_Children: []
-  m_Father: {fileID: 1362935168}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -40, y: -33}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1362935167
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1362935168}
-  - component: {fileID: 1362935169}
-  m_Layer: 5
-  m_Name: PeopleLocations
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1362935168
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1362935167}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1743995841}
-  - {fileID: 1265690573}
-  m_Father: {fileID: 1072852039}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1362935169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1362935167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3cd57db0fdc75e4f9a2d654bcd6bfa8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites: []
 --- !u!1 &1602121217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,7 +1271,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1685391222
 GameObject:
@@ -1131,6 +1283,7 @@ GameObject:
   - component: {fileID: 1685391223}
   - component: {fileID: 1685391225}
   - component: {fileID: 1685391224}
+  - component: {fileID: 1685391226}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1154,7 +1307,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -40, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1685391224
 MonoBehaviour:
@@ -1168,7 +1321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1176,19 +1329,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 484a9624d893f0b45ba9407665e494db, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Next
 --- !u!222 &1685391225
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1196,6 +1349,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1685391222}
   m_CullTransparentMesh: 0
+--- !u!114 &1685391226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1685391222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1704526419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,6 +1373,7 @@ GameObject:
   - component: {fileID: 1704526420}
   - component: {fileID: 1704526422}
   - component: {fileID: 1704526421}
+  - component: {fileID: 1704526423}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1229,7 +1397,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -40, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1704526421
 MonoBehaviour:
@@ -1243,7 +1411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1251,19 +1419,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 484a9624d893f0b45ba9407665e494db, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Next
 --- !u!222 &1704526422
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1271,6 +1439,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1704526419}
   m_CullTransparentMesh: 0
+--- !u!114 &1704526423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1704526419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1743995840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,6 +1461,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1743995841}
+  - component: {fileID: 1743995843}
+  - component: {fileID: 1743995842}
   m_Layer: 5
   m_Name: PeepLoc1
   m_TagString: Untagged
@@ -1292,18 +1476,78 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1743995840}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
-  m_Father: {fileID: 1362935168}
+  m_Father: {fileID: 1133657068}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -231, y: -40}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -230, y: -40}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!111 &1743995842
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1743995840}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!212 &1743995843
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1743995840}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1789199945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1385,7 +1629,7 @@ GameObject:
   - component: {fileID: 2041408451}
   - component: {fileID: 2041408450}
   m_Layer: 0
-  m_Name: Button (1)
+  m_Name: PersonChoice2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1407,8 +1651,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 149, y: 76}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -50, y: -140}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041408450
 MonoBehaviour:
@@ -1470,8 +1714,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: c6dc451e796e51e47a2d99fe283cb69e, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1485,69 +1729,3 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2041408448}
   m_CullTransparentMesh: 0
---- !u!1 &2095415009
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2095415011}
-  - component: {fileID: 2095415010}
-  m_Layer: 0
-  m_Name: Directional Light
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!108 &2095415010
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2095415009}
-  m_Enabled: 1
-  serializedVersion: 8
-  m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
---- !u!4 &2095415011
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2095415009}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}

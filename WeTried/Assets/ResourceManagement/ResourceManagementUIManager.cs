@@ -59,7 +59,7 @@ public class ResourceManagementUIManager : MonoBehaviour
 
     public void UpdateUI(GameState grs)
     {
-        Debug.Log("Updating UI");
+        //Debug.Log("Updating UI");
 
         TotalPeasants.text = grs.ResourceState.nPeasants.ToString();
         TotalWood.text = grs.ResourceState.nWoodResources.ToString();

@@ -62,14 +62,14 @@ public class Peasant : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("I died.");
+        //Debug.Log("I died.");
         Controller.ResourceCore.RemovePeasant(this);
         Destroy(gameObject);
     }
 
     public void StartMoving(ResourceLocation destination, Vector3 tar)
     {
-        Debug.Log("Starting to move");
+        //Debug.Log("Starting to move");
         _currentDestination = destination;
         _target = tar;
         IsInTrasit = true;

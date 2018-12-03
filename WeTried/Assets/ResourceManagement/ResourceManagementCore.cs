@@ -48,12 +48,12 @@ public class ResourceManagementCore : MonoBehaviour
     #region Unity lifecycles
     public void Awake()
     {
-        Debug.Log("Resource management core Awake");
+        //Debug.Log("Resource management core Awake");
         Initialise();
     }
     public void Start()
     {
-        Debug.Log("Resource management core Start");
+        //Debug.Log("Resource management core Start");
     }
     #endregion
 
@@ -81,6 +81,11 @@ public class ResourceManagementCore : MonoBehaviour
         if (UpdateUIEvent != null) UpdateUIEvent.Invoke();
         if (NewDayEvent != null) NewDayEvent.Invoke();
 
+        if (PersistingData.storyProgression <= 3)
+        {
+            PersistingData.gs = CurrentGameState;
+            SceneManager.LoadScene(3);
+        }
     }
 
     public void OnAttackDragon()
@@ -97,14 +102,16 @@ public class ResourceManagementCore : MonoBehaviour
 
     public void Initialise()
     {
-        if (CurrentGameState == null)
+        if (PersistingData.storyProgression == 0 && CurrentGameState == null)
         {
             CurrentGameState = new GameState();
         }
+        else
+        {
+            CurrentGameState = PersistingData.gs;
+        }
 
         Random.InitState(Guid.NewGuid().GetHashCode()); // pretty much guarantees uniqueness between gameruns
-
-        
     }
 
     public int GetNumberOfPeastantsAt(ResourceLocation location)
@@ -229,7 +236,6 @@ public class ResourceManagementCore : MonoBehaviour
         // Wood
         var nPeasantsAtForrest = GetNumberOfPeastantsAt(ResourceLocation.Forest);
         currentState.AddWoodResource(nPeasantsAtForrest);
-
     }
 
     private void GenerateWeapons(int nWood, int nIron, int nPeasants)

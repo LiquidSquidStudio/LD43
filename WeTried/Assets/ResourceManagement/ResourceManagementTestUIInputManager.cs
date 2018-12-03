@@ -24,9 +24,9 @@ public class ResourceManagementTestUIInputManager : MonoBehaviour {
             throw new ArgumentNullException("UI Field", "Test UI Input Manager public fields not wired up");
         }
 
-        Debug.Log("Populating Dropdowns...");
+        //Debug.Log("Populating Dropdowns...");
         PopulateDropdowns();
-        Debug.Log("Populated!");
+        //Debug.Log("Populated!");
     }
 
     #endregion
