@@ -58,6 +58,9 @@ public class CrowdController : MonoBehaviour {
 
     private int _nPeasantsToMove = 1;
 
+    #region MyRegion
+
+
     private void Awake()
     {
         CrowdPos = gameObject.transform;
@@ -95,6 +98,35 @@ public class CrowdController : MonoBehaviour {
 
         UpdatePeasantNumberPanel();
     }
+
+    private void Update()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
+        {
+            if (CrowdSlider.value < CrowdSlider.maxValue)
+            {
+                int currentValue = (int)CrowdSlider.value;
+                currentValue++;
+                _nPeasantsToMove = currentValue;
+                CrowdSlider.value = currentValue;
+                CurrentValueLabel.text = currentValue.ToString();
+            }
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
+        {
+            if (CrowdSlider.value > CrowdSlider.minValue)
+            {
+                int currentValue = (int)CrowdSlider.value;
+                currentValue--;
+                _nPeasantsToMove = currentValue;
+                CrowdSlider.value = currentValue;
+                CurrentValueLabel.text = currentValue.ToString();
+            }
+        }
+    }
+
+    #endregion
+
 
     #region Implementation
 
