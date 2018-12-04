@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1736899724932040}
+  m_IsPrefabAsset: 1
+--- !u!1 &1736899724932040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4570499815528534}
+  - component: {fileID: 114389197582711460}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4570499815528534
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1736899724932040}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.651367, y: -2.1818936, z: 114.32184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114389197582711460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1736899724932040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdcd47fea9a2df548a4506a7c6011d3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: StartTheme
+    clip: {fileID: 8300000, guid: f663af865fc0cab478de762167647f9b, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: MainTheme
+    clip: {fileID: 8300000, guid: c1ed6b6d693001444a75a62b8e5b0f41, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 1
+    source: {fileID: 0}
+  - name: DragonTheme
+    clip: {fileID: 8300000, guid: 36ccff853883c79419a0c3e9a79f0cd1, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: Success
+    clip: {fileID: 8300000, guid: a8a66035d1a927a4ebf4e6a28e8ee1a0, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: SadHappyEnding
+    clip: {fileID: 8300000, guid: 27a8b971ac75c5e429726bbedcf2c6ac, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: CrowdNoise
+    clip: {fileID: 8300000, guid: 8596fc920d21ca54f89968afaa353eef, type: 3}
+    volume: 0.2
+    pitch: 1
+    isLooping: 1
+    source: {fileID: 0}
+  - name: DragonRoar1
+    clip: {fileID: 8300000, guid: ffb7876c6e95f4b45897ecc9f0545f66, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: DragonRoar2
+    clip: {fileID: 8300000, guid: f5b56b69d7c835e498cacd63756b7849, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: No
+    clip: {fileID: 8300000, guid: e1a7efc7e88ac984c8159ddfd3ae55cc, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: Scream1
+    clip: {fileID: 8300000, guid: 59d36defc83bf834685887ac5ad6fe74, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: Scream2
+    clip: {fileID: 8300000, guid: 32e6a7877448e5e45a236aed272285f9, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: Scream3
+    clip: {fileID: 8300000, guid: eba72ed3d00089343bec6f29c00e195d, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: WomanScream
+    clip: {fileID: 8300000, guid: e2bba3c73e1067248a37f2bfa7519cf7, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: WinSmall
+    clip: {fileID: 8300000, guid: 4e8895e802fceb34e93f406eae83eb2b, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: WinMed
+    clip: {fileID: 8300000, guid: 1f3a1c47d7d08bc4a9af9df36539598a, type: 3}
+    volume: 0.4
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}
+  - name: CrowdNoise2
+    clip: {fileID: 8300000, guid: 8596fc920d21ca54f89968afaa353eef, type: 3}
+    volume: 0.1
+    pitch: 0.9
+    isLooping: 1
+    source: {fileID: 0}
+  - name: womp
+    clip: {fileID: 8300000, guid: 4f2ff371eb3dae04b9cef477fcf2b432, type: 3}
+    volume: 1
+    pitch: 1
+    isLooping: 0
+    source: {fileID: 0}

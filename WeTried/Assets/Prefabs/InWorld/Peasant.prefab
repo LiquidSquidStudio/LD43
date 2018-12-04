@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4219943224580086}
   - component: {fileID: 212077036828968822}
   - component: {fileID: 114509864138508834}
-  - component: {fileID: 114034774168674294}
   - component: {fileID: 114902483824166418}
   m_Layer: 0
   m_Name: Peasant
@@ -43,20 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114034774168674294
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1815504423879282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3fe4a1db8fc95c469095e7155d2272f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 70
-  isMoving: 0
-  reachedLocationRadius: 5
 --- !u!114 &114509864138508834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,10 +105,10 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d2729a1c857e2ef47877a39882cb0f56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.15, y: 0.24}

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EndManager : MonoBehaviour {
@@ -17,5 +15,12 @@ public class EndManager : MonoBehaviour {
     {
         PersistingData.gs = null;
         PersistingData.storyProgression = 0;
+    }
+
+    private void Start()
+    {
+        AudioController ac = FindObjectOfType<AudioController>();
+        ac.StopAllClips();
+        ac.PlayClip("womp");
     }
 }

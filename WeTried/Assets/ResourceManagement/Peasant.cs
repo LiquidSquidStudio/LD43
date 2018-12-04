@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 //[System.Serializable]
 //public class PeasantEvent : UnityEvent<Peasant> { }
@@ -25,11 +24,6 @@ public class Peasant : MonoBehaviour
     #endregion
 
     #region Implementation
-
-    private void Start()
-    {
-        //creation.Invoke(this);
-    }
 
     private void Update()
     {
@@ -62,14 +56,12 @@ public class Peasant : MonoBehaviour
 
     public void Die()
     {
-        //Debug.Log("I died.");
         Controller.ResourceCore.RemovePeasant(this);
         Destroy(gameObject);
     }
 
     public void StartMoving(ResourceLocation destination, Vector3 tar)
     {
-        //Debug.Log("Starting to move");
         _currentDestination = destination;
         _target = tar;
         IsInTrasit = true;
