@@ -13,21 +13,19 @@ public class GameState
     public int CurrentDay { get; private set; }
 
     #region Constructor
-    public GameState()
+    public GameState(int foodResource = 0)
     {
-        Initialise();
+        Initialise(startingFoodResource: foodResource );
     }
 
-    private void Initialise()
+    private void Initialise(int startingFoodResource = 0)
     {
         if (King == null) { King = new KingData(); }
         if (Dragon == null) { Dragon = new DragonData(); }
         if (ResourceState == null)
         {
-
-            //var peasants = GeneratePeasants(nPeasants, affinityPercent, statBoostMax);
-            //ResourceState = new GameResourceState(peasants: peasants);
             ResourceState = new GameResourceState();
+            ResourceState.nFoodResources = startingFoodResource;
         }
     }
     #endregion

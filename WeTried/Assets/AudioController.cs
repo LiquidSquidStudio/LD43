@@ -49,6 +49,11 @@ public class AudioController : MonoBehaviour
             Debug.LogWarning("Sound: " + name + " not found");
             return;
         }
+        if (s.source == null)
+        {
+            Debug.LogWarning("Sound Source for: " + name + " not found");
+            return;
+        }
         s.source.Play();
     }
 

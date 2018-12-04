@@ -13,11 +13,21 @@ public class ResourceManagementCore : MonoBehaviour
 {
     #region Property
     public GameState CurrentGameState { get; private set; }
-
     public CoreEvent UpdateUIEvent;
     public CoreEvent NewDayEvent;
     public CoreEvent DayEndEvent;
+    #endregion
 
+    #region Public Fields
+    [Header("Game Initialisation settings")]
+    public int StartFoodResource = 30;
+    public int StartWoodResource = 0;
+    public int StartIronResource = 0;
+    public int StartWeaponResource = 0;
+    [Space]
+    [Header("Game Config")]
+    [Tooltip("Number of peasants one food feeds")]
+    public int PeasantsPerFood = 5;
     #endregion
 
     #region PrivateFields
@@ -30,9 +40,6 @@ public class ResourceManagementCore : MonoBehaviour
     public void Awake()
     {
         Initialise();
-    }
-    public void Start()
-    {
     }
     #endregion
 
@@ -49,8 +56,13 @@ public class ResourceManagementCore : MonoBehaviour
         // Generate resources
         GenerateResources(gameState);
 
+        // Feed the peasants with food
+        FeedPeasants(gameState);
+
         // Let the Dragon purrr
         LetTheDragonLoose(gameState);
+
+        Debug.Log("nPeasants : " + CurrentGameState.GetNumberOfPeasants());
 
         if (CurrentGameState.GetNumberOfPeasants() < 1)
         {
@@ -103,7 +115,7 @@ public class ResourceManagementCore : MonoBehaviour
     {
         if (PersistingData.storyProgression == 0 && CurrentGameState == null)
         {
-            CurrentGameState = new GameState();
+            CurrentGameState = new GameState(foodResource: StartFoodResource);
         }
         else
         {
@@ -264,6 +276,43 @@ public class ResourceManagementCore : MonoBehaviour
 
         return result;
     }
-    
+
+    private void FeedPeasants(GameState gameState)
+    {
+        int nFood = gameState.GetFoodResource();
+        int nPossibleSurvivers = nFood * PeasantsPerFood;
+        int nTotalPeasants = gameState.GetNumberOfPeasants();
+
+        Debug.Log("Food: " + nFood.ToString() + " Peasants: " + nTotalPeasants.ToString());
+
+        if (nPossibleSurvivers >= nTotalPeasants)
+        {
+            int nFoodToEat = (int)nTotalPeasants / PeasantsPerFood;
+            gameState.ResourceState.nFoodResources -= nFoodToEat;
+            Debug.Log("Survived. Ate Food: " + nFoodToEat);
+        }
+        else
+        {
+            int nDead = nTotalPeasants - nPossibleSurvivers;
+            var peasants = gameState.GetPeasants().ToList();
+
+            Debug.Log("Hunger Death. Casualites: " + nDead.ToString());
+
+
+            for (int i = 0; i < nDead; i++)
+            {
+                int randomIndex = Random.Range(0, nTotalPeasants);
+
+                var peasant = peasants.Skip(randomIndex).Take(1).First();
+
+                peasants.Remove(peasant);
+                peasant.Die();
+            }
+
+            // update list
+            gameState.ResourceState.UpdatePeastants(peasants);
+        }
+    }
+
     #endregion
 }
