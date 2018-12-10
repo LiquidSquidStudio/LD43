@@ -10735,7 +10735,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1595332804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14335,6 +14335,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: CoreEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  StartFoodResource: 30
+  StartWoodResource: 0
+  StartIronResource: 0
+  StartWeaponResource: 0
+  PeasantsPerFood: 5
 --- !u!4 &2119484705
 Transform:
   m_ObjectHideFlags: 0
